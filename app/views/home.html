@@ -1,0 +1,23 @@
+<div ng-class="$parent.view.classes" loading="view.loading">
+
+    <div class="heading">
+        <div class="container">
+            <h1 class="main-title">Cliche App</h1>
+        </div>
+    </div>
+    <!-- # .heading -->
+
+    <div ng-if="!view.loading" class="container">
+
+        <div class="row" ng-if="(view.user | isEmpty)">
+            <a href="#/login" class="btn btn-lg btn-primary log-in-btn">Log In</a>
+        </div>
+
+        <section>
+            <h2>Overview</h2>
+            <p>This is Cliche App, imagine that...</p>
+        </section>
+
+    </div>
+    <!-- # .container -->
+</div>
