@@ -1,0 +1,31 @@
+<form ng-submit="jobFormSubmit()" name="forms.jobForm" role="form" novalidate>
+
+    <legend>Inputs</legend>
+
+    <div class="input-container">
+
+        <input-field
+                ng-repeat="(key, property) in view.toolForm.inputs.properties"
+                ng-model="view.jobForm.inputs[key]"
+                key="{{ key }}"
+                prop="property"
+                form="forms.jobForm">
+        </input-field>
+
+    </div>
+
+    <pre pretty-json="view.jobForm.inputs"></pre>
+
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <a class="btn btn-primary btn-block" ng-click="setStep('define-tool')"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary btn-block">Next <i class="glyphicon glyphicon-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+</form>

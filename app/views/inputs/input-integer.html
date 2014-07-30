@@ -1,0 +1,5 @@
+<div class="form-group" ng-class="{required: prop.required, 'has-error': inputForm['input-' + prop.type].$invalid && form.$dirty}">
+    <label class="control-label">{{ key }}</label>
+
+    <input type="number" class="form-control" name="input-integer" ng-model="input" ng-required="prop.required">
+</div>

@@ -5,12 +5,13 @@ $dark-bg: #075211;
 $header-bg: #076112;
 
 .header {
-  $header: 52px;
+  $header: 45px;
   border-bottom: 1px solid #ddd;
-  padding: 10px 0 0 0;
+  padding: 5px 0;
   min-height: $header;
   background-color: $header-bg;
   color: #fff;
+  @include box-shadow(0px 1px 20px 0px darken($header-bg, 10%) inset);
 
   .logo {
     font-size: 30px;
@@ -25,7 +26,7 @@ $header-bg: #076112;
     display: inline-block;
     vertical-align: middle;
     font-size: 14px;
-    line-height: 40px;
+    line-height: 35px;
     text-shadow: 1px 1px 1px $dark-bg;
   }
 

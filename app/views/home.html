@@ -1,22 +1,19 @@
-<div ng-class="$parent.view.classes" loading="view.loading">
+<div class="page home">
 
     <div class="heading">
         <div class="container">
-            <h1 class="main-title">Cliche App</h1>
+            <ul class="steps">
+                <li ng-class="{active: view.step === 'define-tool'}"><span>Define Tool</span></li>
+                <li ng-class="{active: view.step === 'define-job'}"><span>Define Job</span></li>
+                <li ng-class="{active: view.step === 'generate-command'}"><span>Generate Command</span></li>
+            </ul>
         </div>
     </div>
     <!-- # .heading -->
 
-    <div ng-if="!view.loading" class="container">
+    <div class="container">
 
-        <div class="row" ng-if="(view.user | isEmpty)">
-            <a href="#/login" class="btn btn-lg btn-primary log-in-btn">Log In</a>
-        </div>
-
-        <section>
-            <h2>Overview</h2>
-            <p>This is Cliche App, imagine that...</p>
-        </section>
+        <ng-include src="view.stepViewPath"></ng-include>
 
     </div>
     <!-- # .container -->
