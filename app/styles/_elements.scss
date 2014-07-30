@@ -362,33 +362,12 @@ legend {
     background-color: #fcfcfc;
   }
   &.active {
-    //& > .legend-tiny {
-    //  &:after {
-    //    border-top: 5px solid #555;
-    //    border-left: 5px solid transparent;
-    //    border-right: 5px solid transparent;
-    //    border-bottom: none;
-    //    margin-top: -2.5px;
-    //  }
-    //}
     & > .row {
       display: block;
     }
   }
   & > .legend-tiny {
     padding: 5px 10px;
-
-    //&:after {
-    //  content: '';
-    //  display: block;
-    //  position: absolute;
-    //  top: 50%;
-    //  right: 10px;
-    //  border-left: 5px solid #555;
-    //  border-top: 5px solid transparent;
-    //  border-bottom: 5px solid transparent;
-    //  margin-top: -5px;
-    //}
 
     .checkbox {
       display: inline-block;
@@ -400,11 +379,14 @@ legend {
     margin-left: 0;
     margin-right: 0;
     display: none;
+    & > div {
+      padding: 0 5px;
+    }
   }
 
   .checkbox {
     &.no-margin {
-      margin: 0;
+      margin: 5px 0;
     }
   }
 }
@@ -434,4 +416,9 @@ legend {
       }
     }
   }
+}
+
+.command {
+  margin: 100px 0;
+  font-size: 20px;
 }

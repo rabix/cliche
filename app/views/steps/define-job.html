@@ -14,8 +14,16 @@
 
     </div>
 
-    <pre pretty-json="view.jobForm.inputs"></pre>
+    <legend>Adapter</legend>
 
+    <div class="form-group">
+        <label class="control-label">baseCmd</label>
+        <enum ng-model="prop.enum" type="string" min="1" is-required="true"></enum>
+    </div>
+
+
+
+    <pre pretty-json="view.jobForm.inputs"></pre>
 
     <div class="form-group">
         <div class="row">
@@ -23,7 +31,7 @@
                 <a class="btn btn-primary btn-block" ng-click="setStep('define-tool')"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
             </div>
             <div class="col-md-6">
-                <button type="submit" class="btn btn-primary btn-block">Next <i class="glyphicon glyphicon-chevron-right"></i></button>
+                <button type="submit" class="btn btn-primary btn-block" ng-click="generateCommand()">Next <i class="glyphicon glyphicon-chevron-right"></i></button>
             </div>
         </div>
     </div>

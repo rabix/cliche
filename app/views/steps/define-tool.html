@@ -107,13 +107,21 @@
         <div class="col-md-7">
 
             <ul class="nav nav-tabs nav-tabs-steps">
-                <li class="active"><a href="#">Inputs</a></li>
-                <li><a href="#">Outputs</a></li>
+                <li ng-class="{active: view.tab === 'inputs'}"><a href ng-click="switchTab('inputs')">Inputs</a></li>
+                <li ng-class="{active: view.tab === 'outputs'}"><a href ng-click="switchTab('outputs')">Outputs</a></li>
             </ul>
 
-            <legend class="legend-small toggle" ng-class="{active: view.propsExpanded}" ng-click="toggleProperties()">Properties</legend>
+            <div class="tabs" ng-switch="view.tab">
+                <div class="tab" ng-switch-when="inputs">
+                    <legend class="legend-small toggle" ng-class="{active: view.propsExpanded.inputs}" ng-click="toggleProperties('inputs')">Properties</legend>
+                    <property ng-repeat="(key, property) in view.toolForm.inputs.properties" ng-model="property" type="input" name="{{ key }}" form="forms.toolForm" required-inputs="view.toolForm.inputs.required" transforms="view.transforms"></property>
+                </div>
+                <div class="tab" ng-switch-when="outputs">
+                    <legend class="legend-small toggle" ng-class="{active: view.propsExpanded.outputs}" ng-click="toggleProperties('outputs')">Properties</legend>
+                    <property ng-repeat="(key, property) in view.toolForm.outputs.properties" ng-model="property" type="output" name="{{ key }}" form="forms.toolForm" required-inputs="view.toolForm.outputs.required"></property>
+                </div>
+            </div>
 
-            <property ng-repeat="(key, property) in view.toolForm.inputs.properties" ng-model="property" name="{{ key }}" form="forms.toolForm" required-inputs="view.toolForm.inputs.required" transforms="view.transforms"></property>
 
         </div>
         <!-- END Inputs -->

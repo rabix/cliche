@@ -1,4 +1,4 @@
-<div class="form-group" ng-class="{required: prop.required, 'has-error': (input.length < prop.minItems || input.length > prop.maxItems)}">
+<div class="form-group" ng-class="{required: prop.required, 'has-error': ((input.length < prop.minItems && prop.minItems > 0) || (input.length > prop.maxItems && prop.maxItems > 0))}">
     <label class="control-label">
         {{ key }}
         <span ng-if="prop.minItems || prop.maxItems">

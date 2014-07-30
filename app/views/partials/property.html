@@ -22,7 +22,7 @@
         </div>
         <!-- END Type -->
 
-        <div class="col-md-2">
+        <div class="col-md-1" ng-if="type === 'input'">
             <div class="form-group">
                 <label for="property-prefix-{{ view.uniqueId }}" class="control-label">Prefix</label>
                 <input type="text" class="form-control" id="property-prefix-{{ view.uniqueId }}" name="{{ name }}-prefix" ng-model="prop.adapter.prefix">
@@ -30,20 +30,19 @@
         </div>
         <!-- END Prefix -->
 
-        <div class="col-md-2">
+        <div class="col-md-2" ng-if="type === 'input'">
             <div class="form-group">
                 <label for="property-separator-{{ view.uniqueId }}" class="control-label">Separator</label>
                 <select class="form-control" id="property-separator-{{ view.uniqueId }}" name="{{ name }}-separator" ng-model="prop.adapter.separator">
-                    <option value="">-- choose --</option>
-                    <option value="empty">empty string</option>
-                    <option value="space">space</option>
-                    <option value="equal">=</option>
+                    <option value="">empty string</option>
+                    <option value="_">space</option>
+                    <option value="=">=</option>
                 </select>
             </div>
         </div>
         <!-- END Separator -->
 
-        <div class="col-md-3">
+        <div class="col-md-3" ng-if="type === 'input'">
             <div class="form-group">
                 <label for="property-transform-{{ view.uniqueId }}" class="control-label">Transform</label>
                 <select class="form-control" id="property-transform-{{ view.uniqueId }}" name="{{ name }}-transform" ng-model="prop.adapter.transform" ng-options="transform for transform in transforms">
@@ -53,7 +52,7 @@
         </div>
         <!-- END Transform -->
 
-        <div class="col-md-2">
+        <div class="col-md-1" ng-if="type === 'input'">
             <div class="form-group">
                 <label for="property-order-{{ view.uniqueId }}" class="control-label">Order</label>
                 <input type="text" class="form-control" id="property-order-{{ view.uniqueId }}" name="{{ name }}-order" ng-model="prop.adapter.order">
@@ -61,8 +60,9 @@
         </div>
         <!-- END Order -->
 
-        <div class="col-md-2" ng-if="prop.type === 'string'">
+        <div class="col-md-2" ng-if="prop.type === 'string' && type === 'input'">
             <div class="form-group">
+                <label class="control-label">&nbsp;</label>
                 <div class="checkbox no-margin">
                     <label><input type="checkbox" ng-model="prop.isEnum"> Enum</label>
                 </div>
@@ -70,17 +70,16 @@
         </div>
         <!-- END Enum -->
 
-    </div>
-
-    <div class="row" ng-if="prop.type === 'file'">
-        <div class="col-md-4">
+        <div class="col-md-2" ng-if="prop.type === 'file'">
             <div class="form-group">
+                <label class="control-label">&nbsp;</label>
                 <div class="checkbox no-margin">
                     <label><input type="checkbox" ng-model="view.adapter.streamable"> Streamable</label>
                 </div>
             </div>
         </div>
         <!-- END Streamable -->
+
     </div>
 
     <div class="row" ng-if="prop.type === 'array'">
@@ -101,7 +100,7 @@
         </div>
         <!-- END Max -->
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="property-item-type-{{ view.uniqueId }}" class="control-label">Item Type</label>
 
@@ -115,20 +114,31 @@
         </div>
         <!-- END Item Type -->
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="property-item-separator-{{ view.uniqueId }}" class="control-label">Item Separator</label>
 
-                <select class="form-control" id="property-item-separator-{{ view.uniqueId }}" name="{{ name }}-item-separator" ng-model="prop.items.separator">
+                <select class="form-control" id="property-item-separator-{{ view.uniqueId }}" name="{{ name }}-item-separator" ng-model="prop.adapter.listSeparator">
                     <option value="">-- choose --</option>
-                    <option value="comma">,</option>
-                    <option value="semicolon">;</option>
-                    <option value="space">space</option>
+                    <option value=",">,</option>
+                    <option value=";">;</option>
+                    <option value=" ">space</option>
                     <option value="repeat">repeat</option>
                 </select>
             </div>
         </div>
         <!-- END Item Separator -->
+
+        <div class="col-md-2" ng-if="prop.items.type === 'file'">
+            <div class="form-group">
+                <label class="control-label">&nbsp;</label>
+                <div class="checkbox no-margin">
+                    <label><input type="checkbox" ng-model="prop.adapter.streamable"> Streamable</label>
+                </div>
+            </div>
+        </div>
+        <!-- END Item Streamable -->
+
     </div>
 
     <div class="row" ng-if="prop.isEnum">

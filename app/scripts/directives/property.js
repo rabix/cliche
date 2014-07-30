@@ -11,6 +11,7 @@ angular.module('clicheApp')
             template: $templateCache.get('views/partials/property.html'),
             scope: {
                 name: '@',
+                type: '@',
                 prop: '=ngModel',
                 form: '=',
                 requiredInputs: '=',
