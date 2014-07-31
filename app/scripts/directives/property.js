@@ -13,6 +13,7 @@ angular.module('clicheApp')
                 name: '@',
                 type: '@',
                 prop: '=ngModel',
+                active: '=',
                 form: '=',
                 requiredInputs: '=',
                 transforms: '='
@@ -23,12 +24,25 @@ angular.module('clicheApp')
 
                 uniqueId++;
                 scope.view.uniqueId = uniqueId;
+                scope.view.isEnum = _.isArray(scope.prop.enum);
 
                 /**
                  * Toggle property box visibility
                  */
                 scope.toggleProperty = function() {
-                    scope.prop.active = !scope.prop.active;
+                    scope.active = !scope.active;
+                };
+
+
+                /**
+                 * Toggle enum flag
+                 */
+                scope.toggleEnum = function() {
+                    if (scope.view.isEnum) {
+                        scope.prop.enum = [''];
+                    } else {
+                        scope.prop.enum = null;
+                    }
                 };
 
             }

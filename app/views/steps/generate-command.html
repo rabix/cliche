@@ -1,8 +1,13 @@
-<div>
+<div class="command-wrap">
 
-    <pre class="command">{{ view.command }}</pre>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <h2>Command</h2>
+            <pre class="command">{{ view.command }}</pre>
+        </div>
+    </div>
 
-    <div class="form-group">
-        <a class="btn btn-primary btn-block" ng-click="setStep('define-job')"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
+    <div class="form-group main-actions">
+        <a class="btn btn-primary pull-left" ng-click="setStep('define-job')"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
     </div>
 </div>

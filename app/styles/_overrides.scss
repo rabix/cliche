@@ -71,6 +71,19 @@ form {
         }
       }
     }
+    &.form-group-email {
+      input[type=email] {
+        padding-left: 60px;
+      }
+      &:before {
+        content: 'mailto:';
+        display: inline-block;
+        color: #aaa;
+        position: absolute;
+        bottom: 7px;
+        left: 7px;
+      }
+    }
   }
 }
 

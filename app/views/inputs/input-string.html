@@ -1,9 +1,9 @@
 <div class="form-group" ng-class="{required: prop.required, 'has-error': inputForm['input-' + prop.type].$invalid && form.$dirty}">
     <label class="control-label">{{ key }}</label>
 
-    <input ng-show="!prop.isEnum" type="text" class="form-control" name="input-string" ng-model="input" ng-required="prop.required">
+    <input ng-show="!prop.enum" type="text" class="form-control" name="input-string" ng-model="input" ng-required="prop.required">
 
-    <select ng-show="prop.isEnum" class="form-control" name="input-string" ng-model="input" ng-options="option for option in prop.enum" ng-required="prop.required">
+    <select ng-show="prop.enum" class="form-control" name="input-string" ng-model="input" ng-options="option for option in prop.enum" ng-required="prop.required">
         <option value="">-- choose the option --</option>
     </select>
 </div>

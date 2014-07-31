@@ -1,16 +1,16 @@
-<div class="property-wrap" ng-class="{active: prop.active}">
+<div class="property-wrap" ng-class="{active: active}">
 
-    <legend class="legend-tiny toggle" ng-class="{active: prop.active}" ng-click="toggleProperty()">
+    <legend class="legend-tiny toggle" ng-class="{active: active}" ng-click="toggleProperty()">
         {{ name }}
-        <div class="checkbox"><label><input type="checkbox" ng-model="prop.required"> required</label></div>
+        <div ng-if="type === 'input'" class="checkbox"><label><input type="checkbox" ng-model="prop.required"> required</label></div>
     </legend>
 
     <div class="row">
 
         <div class="col-md-3">
-            <div class="form-group" ng-class="{'has-error': (form[name+'-type'].$invalid && form[name].$dirty)}">
-                <label for="property-type-{{ view.uniqueId }}" class="control-label">Type</label>
-                <select class="form-control" id="property-type-{{ view.uniqueId }}" name="{{ name }}-type" ng-model="prop.type">
+            <div ng-if="type === 'input'" class="form-group" ng-class="{'has-error': (form[name+'-type'].$invalid && form[name].$dirty)}">
+                <label for="property-input-type-{{ view.uniqueId }}" class="control-label">Type</label>
+                <select class="form-control" id="property-input-type-{{ view.uniqueId }}" name="{{ name }}-type" ng-model="prop.type">
                     <option value="">-- choose --</option>
                     <option value="file">file</option>
                     <option value="string">string</option>
@@ -19,8 +19,25 @@
                     <option value="boolean">boolean</option>
                 </select>
             </div>
+
+            <div ng-if="type === 'output'" class="form-group" ng-class="{'has-error': (form[name+'-type'].$invalid && form[name].$dirty)}">
+                <label for="property-output-type-{{ view.uniqueId }}" class="control-label">Type</label>
+                <select class="form-control" id="property-output-type-{{ view.uniqueId }}" name="{{ name }}-type" ng-model="prop.type">
+                    <option value="">-- choose --</option>
+                    <option value="file">file</option>
+                    <option value="directory">directory</option>
+                </select>
+            </div>
         </div>
         <!-- END Type -->
+
+        <div class="col-md-3" ng-if="type === 'output' && prop.type === 'file'">
+            <div class="form-group">
+                <label for="property-glob-{{ view.uniqueId }}" class="control-label">Glob</label>
+                <input type="text" class="form-control" id="property-glob-{{ view.uniqueId }}" name="{{ name }}-glob" ng-model="prop.adapter.glob">
+            </div>
+        </div>
+        <!-- END Prefix -->
 
         <div class="col-md-1" ng-if="type === 'input'">
             <div class="form-group">
@@ -42,20 +59,20 @@
         </div>
         <!-- END Separator -->
 
-        <div class="col-md-3" ng-if="type === 'input'">
+        <div class="col-md-2" ng-if="type === 'input'">
             <div class="form-group">
                 <label for="property-transform-{{ view.uniqueId }}" class="control-label">Transform</label>
                 <select class="form-control" id="property-transform-{{ view.uniqueId }}" name="{{ name }}-transform" ng-model="prop.adapter.transform" ng-options="transform for transform in transforms">
-                    <option value="">-- choose --</option>
+                    <option value="">-- none --</option>
                 </select>
             </div>
         </div>
         <!-- END Transform -->
 
-        <div class="col-md-1" ng-if="type === 'input'">
+        <div class="col-md-2" ng-if="type === 'input'">
             <div class="form-group">
                 <label for="property-order-{{ view.uniqueId }}" class="control-label">Order</label>
-                <input type="text" class="form-control" id="property-order-{{ view.uniqueId }}" name="{{ name }}-order" ng-model="prop.adapter.order">
+                <input type="number" class="form-control" id="property-order-{{ view.uniqueId }}" name="{{ name }}-order" ng-model="prop.adapter.order">
             </div>
         </div>
         <!-- END Order -->
@@ -64,7 +81,7 @@
             <div class="form-group">
                 <label class="control-label">&nbsp;</label>
                 <div class="checkbox no-margin">
-                    <label><input type="checkbox" ng-model="prop.isEnum"> Enum</label>
+                    <label><input type="checkbox" ng-model="view.isEnum" ng-change="toggleEnum()"> Enum</label>
                 </div>
             </div>
         </div>
@@ -74,7 +91,7 @@
             <div class="form-group">
                 <label class="control-label">&nbsp;</label>
                 <div class="checkbox no-margin">
-                    <label><input type="checkbox" ng-model="view.adapter.streamable"> Streamable</label>
+                    <label><input type="checkbox" ng-model="prop.adapter.streamable"> Streamable</label>
                 </div>
             </div>
         </div>
@@ -100,7 +117,7 @@
         </div>
         <!-- END Max -->
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="property-item-type-{{ view.uniqueId }}" class="control-label">Item Type</label>
 
@@ -114,7 +131,7 @@
         </div>
         <!-- END Item Type -->
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="property-item-separator-{{ view.uniqueId }}" class="control-label">Item Separator</label>
 
@@ -131,6 +148,16 @@
 
         <div class="col-md-2" ng-if="prop.items.type === 'file'">
             <div class="form-group">
+                <label for="property-item-transform-{{ view.uniqueId }}" class="control-label">Transform</label>
+                <select class="form-control" id="property-item-transform-{{ view.uniqueId }}" name="{{ name }}-item-transform" ng-model="prop.adapter.listTransform" ng-options="transform for transform in transforms">
+                    <option value="">-- none --</option>
+                </select>
+            </div>
+        </div>
+        <!-- END Transform -->
+
+        <div class="col-md-2" ng-if="prop.items.type === 'file'">
+            <div class="form-group">
                 <label class="control-label">&nbsp;</label>
                 <div class="checkbox no-margin">
                     <label><input type="checkbox" ng-model="prop.adapter.streamable"> Streamable</label>
@@ -141,7 +168,7 @@
 
     </div>
 
-    <div class="row" ng-if="prop.isEnum">
+    <div class="row" ng-if="view.isEnum">
         <div class="col-md-12">
             <enum ng-model="prop.enum" type="string" min="1" is-required="true"></enum>
         </div>

@@ -5,7 +5,6 @@
             <ul class="steps">
                 <li ng-class="{active: view.step === 'define-tool'}"><span>Define Tool</span></li>
                 <li ng-class="{active: view.step === 'define-job'}"><span>Define Job</span></li>
-                <li ng-class="{active: view.step === 'generate-command'}"><span>Generate Command</span></li>
             </ul>
         </div>
     </div>
@@ -13,7 +12,29 @@
 
     <div class="container">
 
-        <ng-include src="view.stepViewPath"></ng-include>
+        <div class="row">
+            <div class="col-md-8">
+                <ng-include src="view.stepViewPath"></ng-include>
+            </div>
+            <div class="col-md-4">
+
+                <ul class="nav nav-tabs nav-tabs-steps">
+                    <li class="pull-right" ng-class="{active: view.trace === 'job'}"><a href ng-click="switchTrace('job')">Job JSON</a></li>
+                    <li class="pull-right" ng-class="{active: view.trace === 'tool'}"><a href ng-click="switchTrace('tool')">Tool JSON</a></li>
+                </ul>
+
+                <div class="tabs" ng-switch="view.trace">
+                    <div class="tab" ng-switch-when="tool">
+                        <pre class="json-trace" pretty-json="view.toolForm"></pre>
+                    </div>
+
+                    <div class="tab" ng-switch-when="job">
+                        <pre class="json-trace" pretty-json="view.jobForm"></pre>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
     </div>
     <!-- # .container -->

@@ -5,7 +5,7 @@
             <a href ng-click="addItem()" class="btn btn-default" ng-class="{disabled: max && list.length >= max}"><i class="glyphicon glyphicon-plus"></i></a>
         </div>
         <div class="col-md-11">
-            <ul class="enum-list">
+            <ul class="enum-list" ng-class="{wide: min && list.length <= min}">
                 <li ng-repeat="item in list track by $index">
 
                     <div class="form-group" ng-class="{'has-error': isRequired && item.value === ''}">
