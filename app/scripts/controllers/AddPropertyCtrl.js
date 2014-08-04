@@ -54,7 +54,7 @@ angular.module('clicheApp')
 
         $scope.$watch('view.property.value', function(n, o) {
             if (n !== o && !_.isEmpty(n)) {
-                $scope.view.property.valueFrom = null;
+                delete $scope.view.property.valueFrom;
             }
         });
 

@@ -118,8 +118,7 @@ angular.module('clicheApp')
             $scope.view.tabViewPath = 'views/tabs/' + tab + '.html';
         };
 
-        var toolFormWatcher;
-        var jobFormWatcher;
+        var watchers = [];
 
         /**
          * Turn on deep watch when console tab is visible
@@ -130,17 +129,18 @@ angular.module('clicheApp')
 
             $scope.view.command = Data.generateCommand();
 
-            toolFormWatcher = $scope.$watch('view.toolForm.adapter', function(n, o) {
-                if (n !== o) {
-                    $scope.view.command = Data.generateCommand();
-                }
-            }, true);
+            var watch = ['view.jobForm.inputs', 'view.toolForm.inputs.properties', 'view.toolForm.adapter'];
 
-            jobFormWatcher = $scope.$watch('view.jobForm.inputs', function(n, o) {
-                if (n !== o) {
-                    $scope.view.command = Data.generateCommand();
-                }
-            }, true);
+            _.each(watch, function(arg) {
+                var watcher = $scope.$watch(arg, function(n, o) {
+                    if (n !== o) {
+                        console.log('watcher:'+ arg);
+                        $scope.view.command = Data.generateCommand();
+                    }
+                }, true);
+                watchers.push(watcher);
+            });
+
         };
 
         /**
@@ -150,12 +150,13 @@ angular.module('clicheApp')
 
             console.log('turnOffDeepWatch');
 
-            if (_.isFunction(toolFormWatcher)) {
-                toolFormWatcher();
-            }
-            if (_.isFunction(jobFormWatcher)) {
-                jobFormWatcher();
-            }
+            _.each(watchers, function(watcher) {
+                if (_.isFunction(watcher)) {
+                    watcher.call();
+                }
+            });
+
+            watchers = [];
         };
 
         /**
