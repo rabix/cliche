@@ -33,6 +33,7 @@
           color: #555;
           border-left: 1px solid #ddd;
           border-right: 1px solid #ddd;
+          margin-right: -15px;
         }
       }
       &.active {
@@ -43,6 +44,19 @@
           color: #fff;
           text-shadow: 1px 1px 1px #222;
           border: none;
+        }
+      }
+    }
+    @media (max-width: 1200px) {
+      li {
+        &.logo {
+          a {
+            padding-right: 10px;
+          }
+        }
+        a {
+          font-size: 14px;
+          padding: 10px;
         }
       }
     }
@@ -205,7 +219,6 @@ ul {
 .modal {
   &.modal-prop {
     .modal-dialog {
-      width: 800px !important;
       .main-actions {
         text-align: right;
         margin: 10px -15px -15px;
