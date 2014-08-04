@@ -466,26 +466,22 @@ legend {
   }
 }
 
-.json-trace {
+.json-trace,
+.console-trace {
   height: 760px;
-  margin: 0 0 20px 0;
+  background-color: #222;
+  border-color: $orange;
+  color: $orange;
+  margin: 0;
+  @include box-shadow(none);
+  @include border-radius(0);
 }
 
 .console-trace {
   font-size: 20px;
 }
 
-.json-trace,
-.console-trace {
-  background-color: #222;
-  border-color: $orange;
-  color: $orange;
-  @include box-shadow(none);
-  @include border-radius(0);
-}
-
 .tabs {
-  padding: 10px;
   &.left {
     padding: 10px 20px;
   }
