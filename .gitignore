@@ -8,3 +8,4 @@ template.js
 *.css
 .idea
 .DS_Store
+*.iml

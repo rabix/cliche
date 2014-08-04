@@ -1,0 +1,15 @@
+<legend class="legend-small toggle" ng-class="{active: view.propsExpanded.outputs}" ng-click="toggleProperties('outputs')">
+    Properties
+    <a href ng-click="addItem('output', $event)" class="btn btn-default">
+        <i class="glyphicon glyphicon-plus"></i>
+    </a>
+</legend>
+
+<property-output
+        ng-repeat="(key, property) in view.toolForm.outputs.properties"
+        ng-model="property"
+        active="view.active.outputs[key]"
+        name="{{ key }}"
+        form="forms.toolForm"
+        required-inputs="view.toolForm.outputs.required">
+</property-output>

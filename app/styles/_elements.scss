@@ -4,7 +4,6 @@
   .heading,
   .filters {
     background-color: $gray;
-    border-bottom: 1px solid #ddd;
     background-image: url(../images/bg.png);
     @include box-shadow(0px 2px 0px 0px $orange);
   }
@@ -61,6 +60,14 @@
         }
 
       }
+    }
+
+    .logo {
+      font-size: 25px;
+      color: #555;
+      text-decoration: none;
+      text-shadow: 2px 2px 2px #fff;
+      padding: 3px 20px 3px 10px;
     }
   }
 
@@ -342,17 +349,21 @@ legend {
 .property-wrap,
 .argument-wrap {
   margin: 0 0 10px 0;
+  border: 1px solid #ddd;
+
   &:hover {
-    background-color: #fcfcfc;
+    border: 1px solid #ccc;
   }
   &.active {
+    & > .legend-tiny {
+      border-bottom: 1px solid #ddd;
+    }
     .property-body {
       display: block;
     }
   }
   & > .legend-tiny {
     padding: 5px 30px 5px 25px;
-    border: 1px solid #ddd;
     margin: 0;
     position: relative;
 
@@ -378,11 +389,7 @@ legend {
   .property-body {
     display: none;
     padding: 10px;
-    border: {
-      left: 1px solid #ddd;
-      right: 1px solid #ddd;
-      bottom: 1px solid #ddd;
-    }
+    background-color: #f9f9f9;
     & > .row {
       margin-left: 0;
       margin-right: 0;
@@ -448,6 +455,23 @@ legend {
   font-size: 20px;
 }
 
+.json-trace,
+.console-trace {
+  background-color: #222;
+  border-color: $orange;
+  color: $orange;
+  @include box-shadow(none);
+  @include border-radius(0);
+}
+
 .tabs {
   min-height: 650px;
+  padding: 10px;
+  &.left {
+    padding: 10px 20px;
+  }
+}
+
+.no-margin {
+  margin: 0;
 }

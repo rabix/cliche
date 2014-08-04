@@ -13,28 +13,6 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-.main {
-  //height: 100%;
-  .content {
-    //height: 90%;
-
-    //@media screen and (max-height: 800) {
-    //  height: 90%;
-    //}
-
-    .page {
-      //height: 100%;
-      & > .container {
-        //height: 90%;
-        //overflow: auto;
-        //margin-top: 2px;
-        //@include scrollBar($orange);
-      }
-    }
-  }
-}
-
-@import "header";
 @import "loader";
 @import "error";
 @import "elements";
@@ -44,7 +22,7 @@ body {
 ================================================ */
 .page {
   position: relative;
-  background-color: #fff;
+  background-color: #fcfcfc;
 
   h1 {
     margin: 0;

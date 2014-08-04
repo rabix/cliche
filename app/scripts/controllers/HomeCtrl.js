@@ -12,6 +12,8 @@ angular.module('clicheApp')
         $scope.view.trace = 'tool';
         $scope.view.showTrace = true;
 
+        $scope.view.tabViewPath = 'views/tabs/general.html';
+
         $scope.view.propsExpanded = {
             inputs: false,
             outputs: false,
@@ -77,56 +79,6 @@ angular.module('clicheApp')
         });
 
         /**
-         * Set the appropriate step
-         * @param step
-         */
-        $scope.setStep = function(step) {
-            $scope.view.step = step;
-            $scope.view.stepViewPath = 'views/steps/' + $scope.view.step + '.html';
-        };
-
-        /* init the step */
-        $scope.setStep('define-tool');
-
-        /**
-         * Submit first step (define tool)
-         * @returns {boolean}
-         */
-        $scope.toolFormSubmit = function() {
-
-            $scope.forms.toolForm.$setDirty();
-
-            if ($scope.forms.toolForm.$invalid) {
-                var bodyContainer = angular.element($document[0].body)[0];
-                bodyContainer.scrollTop = 0;
-                return false;
-            }
-
-            $scope.view.command = Data.generateCommand();
-
-            $scope.setStep('define-job');
-
-        };
-
-        /**
-         * Submit second step (define job)
-         * @returns {boolean}
-         */
-        $scope.jobFormSubmit = function() {
-
-            $scope.forms.jobForm.$setDirty();
-
-            if ($scope.forms.jobForm.$invalid) {
-                var bodyContainer = angular.element($document[0].body)[0];
-                bodyContainer.scrollTop = 0;
-                return false;
-            }
-
-            $scope.view.command = Data.generateCommand();
-
-        };
-
-        /**
          * Toggle transforms list
          * @param transform
          */
@@ -158,22 +110,53 @@ angular.module('clicheApp')
         };
 
         /**
-         * Toggle trace visibility
-         */
-        $scope.toggleTrace = function() {
-            $scope.view.showTrace = !$scope.view.showTrace;
-        };
-
-        /**
          * Switch the tab
          * @param tab
          */
         $scope.switchTab = function(tab) {
             $scope.view.tab = tab;
+            $scope.view.tabViewPath = 'views/tabs/' + tab + '.html';
         };
 
         var toolFormWatcher;
         var jobFormWatcher;
+
+        /**
+         * Turn on deep watch when console tab is visible
+         */
+        var turnOnDeepWatch = function() {
+
+            console.log('turnOnDeepWatch');
+
+            $scope.view.command = Data.generateCommand();
+
+            toolFormWatcher = $scope.$watch('view.toolForm.adapter', function(n, o) {
+                if (n !== o) {
+                    $scope.view.command = Data.generateCommand();
+                }
+            }, true);
+
+            jobFormWatcher = $scope.$watch('view.jobForm.inputs', function(n, o) {
+                if (n !== o) {
+                    $scope.view.command = Data.generateCommand();
+                }
+            }, true);
+        };
+
+        /**
+         * Turn off deep watch when console tab is hidden
+         */
+        var turnOffDeepWatch = function() {
+
+            console.log('turnOffDeepWatch');
+
+            if (_.isFunction(toolFormWatcher)) {
+                toolFormWatcher();
+            }
+            if (_.isFunction(jobFormWatcher)) {
+                jobFormWatcher();
+            }
+        };
 
         /**
          * Switch the trace tab
@@ -183,28 +166,24 @@ angular.module('clicheApp')
             $scope.view.trace = tab;
 
             if (tab === 'console') {
-                $scope.view.command = Data.generateCommand();
-
-                toolFormWatcher = $scope.$watch('view.toolForm.adapter', function(n, o) {
-                    if (n !== o) {
-                        $scope.view.command = Data.generateCommand();
-                    }
-                }, true);
-
-                jobFormWatcher = $scope.$watch('view.jobForm.inputs', function(n, o) {
-                    if (n !== o) {
-                        $scope.view.command = Data.generateCommand();
-                    }
-                }, true);
+                turnOnDeepWatch();
             } else {
-                if (_.isFunction(toolFormWatcher)) {
-                    toolFormWatcher();
-                }
-                if (_.isFunction(jobFormWatcher)) {
-                    jobFormWatcher();
-                }
+                turnOffDeepWatch();
             }
 
+        };
+
+        /**
+         * Toggle trace visibility
+         */
+        $scope.toggleTrace = function() {
+            $scope.view.showTrace = !$scope.view.showTrace;
+
+            if ($scope.view.showTrace) {
+                if ($scope.view.trace === 'console') turnOnDeepWatch();
+            } else {
+                if ($scope.view.trace === 'console') turnOffDeepWatch();
+            }
         };
 
         /**
