@@ -5,6 +5,7 @@
   .filters {
     background-color: $gray;
     background-image: url(../images/bg.png);
+    border-top: 1px solid #ddd;
     @include box-shadow(0px 2px 0px 0px $orange);
   }
 
@@ -313,6 +314,13 @@
   .alert {
     padding: 6px 10px;
   }
+  .add-enum-item {
+    float: left;
+  }
+  .enum-list-container {
+    display: block;
+    margin-left: 50px;
+  }
 }
 
 legend {
@@ -465,7 +473,6 @@ legend {
 }
 
 .tabs {
-  min-height: 650px;
   padding: 10px;
   &.left {
     padding: 10px 20px;
