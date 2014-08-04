@@ -116,6 +116,51 @@ angular.module('clicheApp')
         };
 
         /**
+         * Add new property
+         *
+         * @param type
+         * @param name
+         * @param prop
+         */
+        self.addProperty = function(type, name, prop) {
+
+            switch (type) {
+                case 'input':
+                    self.tool.inputs.properties[name] = prop;
+                    break;
+                case 'output':
+                    self.tool.outputs.properties[name] = prop;
+                    break;
+                case 'arg':
+                    self.tool.adapter.args.push(prop);
+                    break;
+            }
+
+        };
+
+        /**
+         * Delete property from the object
+         *
+         * @param type
+         * @param index
+         */
+        self.deleteProperty = function(type, index) {
+
+            switch (type) {
+                case 'input':
+                    delete self.tool.inputs.properties[index];
+                    break;
+                case 'output':
+                    delete self.tool.outputs.properties[index];
+                    break;
+                case 'arg':
+                    self.tool.adapter.args.splice(index, 1);
+                    break;
+            }
+
+        };
+
+        /**
          * Apply the transformation function (this is just the mock)
          *
          * @param transform
@@ -198,8 +243,9 @@ angular.module('clicheApp')
             _.each(joined, function(arg) {
 
                 var separator = (_.isUndefined(arg.separator) || arg.separator === '_') ? ((arg.prefix === '') ? '' : ' ') : ((arg.prefix === '') ? '' : arg.separator);
+                var value = _.isUndefined(arg.value) ? '' : arg.value;
 
-                command.push(arg.prefix + separator + arg.value);
+                command.push(arg.prefix + separator + value);
             });
 
             var output = self.tool.adapter.baseCmd.join(' ') + ' ' +

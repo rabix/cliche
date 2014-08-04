@@ -1,21 +1,17 @@
 <form ng-submit="jobFormSubmit()" name="forms.jobForm" role="form" novalidate>
 
-    <legend>Inputs</legend>
+    <div class="tabs" ng-switch="view.tab">
 
-    <div class="input-container">
-        <input-field
-                ng-repeat="(key, property) in view.toolForm.inputs.properties"
-                ng-model="view.jobForm.inputs[key]"
-                key="{{ key }}"
-                prop="property"
-                form="forms.jobForm">
-        </input-field>
-    </div>
+        <div class="input-container">
+            <input-field
+                    ng-repeat="(key, property) in view.toolForm.inputs.properties"
+                    ng-model="view.jobForm.inputs[key]"
+                    key="{{ key }}"
+                    prop="property"
+                    form="forms.jobForm">
+            </input-field>
+        </div>
 
-    <div class="deep-watch">
-        <a class="btn pull-left" href ng-click="toggleDeepWatch()" ng-class="{'btn-danger': view.deepWatch, 'btn-primary': !view.deepWatch}">Turn {{ view.deepWatch ? 'Off' : 'On' }} Deep Watch</a>
-        <pre ng-if="view.deepWatch">{{ view.command }}</pre>
-        <p ng-if="!view.deepWatch" class="alert alert-info">Turn on the deep watch to see the command generation in real time</p>
     </div>
 
     <div class="form-group main-actions">

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('clicheApp')
-    .controller('HomeCtrl', ['$scope', '$timeout', '$document', 'Header', 'Data', function ($scope, $timeout, $document, Header, Data) {
+    .controller('HomeCtrl', ['$scope', '$timeout', '$document', '$modal', '$templateCache', 'Header', 'Data', function ($scope, $timeout, $document, $modal, $templateCache, Header, Data) {
 
         Header.setActive('home');
 
@@ -10,6 +10,7 @@ angular.module('clicheApp')
 
         $scope.view.tab = 'general';
         $scope.view.trace = 'tool';
+        $scope.view.showTrace = true;
 
         $scope.view.propsExpanded = {
             inputs: false,
@@ -107,41 +108,6 @@ angular.module('clicheApp')
 
         };
 
-        //var toolFormWatcher;
-        var jobFormWatcher;
-        $scope.view.deepWatch = false;
-
-        /**
-         * Toggle deep watch
-         */
-        $scope.toggleDeepWatch = function() {
-            $scope.view.deepWatch = !$scope.view.deepWatch;
-
-            if ($scope.view.deepWatch) {
-
-                $scope.view.command = Data.generateCommand();
-
-//                toolFormWatcher = $scope.$watch('view.toolForm.adapter', function(n, o) {
-//                    if (n !== o) {
-//                        $scope.view.command = Data.generateCommand();
-//                    }
-//                }, true);
-
-                jobFormWatcher = $scope.$watch('view.jobForm.inputs', function(n, o) {
-                    if (n !== o) {
-                        $scope.view.command = Data.generateCommand();
-                    }
-                }, true);
-
-            } else {
-                //toolFormWatcher();
-                jobFormWatcher();
-            }
-        };
-
-        /* init deep watch by default */
-        $scope.toggleDeepWatch();
-
         /**
          * Submit second step (define job)
          * @returns {boolean}
@@ -192,6 +158,13 @@ angular.module('clicheApp')
         };
 
         /**
+         * Toggle trace visibility
+         */
+        $scope.toggleTrace = function() {
+            $scope.view.showTrace = !$scope.view.showTrace;
+        };
+
+        /**
          * Switch the tab
          * @param tab
          */
@@ -199,12 +172,65 @@ angular.module('clicheApp')
             $scope.view.tab = tab;
         };
 
+        var toolFormWatcher;
+        var jobFormWatcher;
+
         /**
          * Switch the trace tab
          * @param tab
          */
         $scope.switchTrace = function(tab) {
             $scope.view.trace = tab;
+
+            if (tab === 'console') {
+                $scope.view.command = Data.generateCommand();
+
+                toolFormWatcher = $scope.$watch('view.toolForm.adapter', function(n, o) {
+                    if (n !== o) {
+                        $scope.view.command = Data.generateCommand();
+                    }
+                }, true);
+
+                jobFormWatcher = $scope.$watch('view.jobForm.inputs', function(n, o) {
+                    if (n !== o) {
+                        $scope.view.command = Data.generateCommand();
+                    }
+                }, true);
+            } else {
+                if (_.isFunction(toolFormWatcher)) {
+                    toolFormWatcher();
+                }
+                if (_.isFunction(jobFormWatcher)) {
+                    jobFormWatcher();
+                }
+            }
+
+        };
+
+        /**
+         * Show the modal for adding property items
+         * @param type
+         * @param e
+         */
+        $scope.addItem = function(type, e) {
+
+            e.stopPropagation();
+
+            $modal.open({
+                template: $templateCache.get('views/partials/add-property-' + type + '.html'),
+                controller: 'AddPropertyCtrl',
+                windowClass: 'modal-prop',
+                resolve: {
+                    options: function () {
+                        return {
+                            type: type,
+                            platformFeatures: $scope.view.toolForm.requirements.platformFeatures,
+                            valuesFrom: $scope.view.valuesFrom
+                        };
+                    }
+                }
+            });
+
         };
 
     }]);

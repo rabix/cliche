@@ -1,24 +1,28 @@
 <div class="page home">
 
-    <div class="heading">
-        <div class="container">
-            <ul class="steps">
-                <li ng-class="{active: view.step === 'define-tool'}"><span>Define Tool</span></li>
-                <li ng-class="{active: view.step === 'define-job'}"><span>Define Job</span></li>
-            </ul>
-        </div>
-    </div>
-    <!-- # .heading -->
-
     <div class="container">
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8" ng-class="{'col-md-8': view.showTrace, 'col-md-12': !view.showTrace}">
+                <div class="heading">
+                    <ul class="steps">
+                        <li ng-class="{active: view.step === 'define-tool'}"><span>Define Tool</span></li>
+                        <li ng-class="{active: view.step === 'define-job'}"><span>Define Job</span></li>
+                    </ul>
+                </div>
+                <!-- # .heading -->
                 <ng-include src="view.stepViewPath"></ng-include>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" ng-show="view.showTrace">
 
-                <ul class="nav nav-tabs nav-tabs-steps">
+                <ul class="nav nav-tabs nav-tabs-trace">
+                    <li>
+                        <a href ng-click="toggleTrace()" tooltip="{{ view.showTrace ? 'hide' : 'show' }} trace" tooltip-append-to-body="true">
+                            <i class="glyphicon" ng-class="{'glyphicon-chevron-right': view.showTrace, 'glyphicon-chevron-left': !view.showTrace}"></i>
+                        </a>
+                    </li>
+
+                    <li class="pull-right" ng-class="{active: view.trace === 'console'}"><a href ng-click="switchTrace('console')">Console</a></li>
                     <li class="pull-right" ng-class="{active: view.trace === 'job'}"><a href ng-click="switchTrace('job')">Job JSON</a></li>
                     <li class="pull-right" ng-class="{active: view.trace === 'tool'}"><a href ng-click="switchTrace('tool')">Tool JSON</a></li>
                 </ul>
@@ -30,6 +34,10 @@
 
                     <div class="tab" ng-switch-when="job">
                         <pre class="json-trace" pretty-json="view.jobForm"></pre>
+                    </div>
+
+                    <div class="tab" ng-switch-when="console">
+                        <pre class="console-trace">{{ view.command }}</pre>
                     </div>
                 </div>
 

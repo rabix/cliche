@@ -1,20 +1,20 @@
 'use strict';
 
 angular.module('clicheApp')
-    .directive('argument', ['$templateCache', '$modal', 'Data', function ($templateCache, $modal, Data) {
+    .directive('propertyOutput', ['$templateCache', '$modal', 'Data', function ($templateCache, $modal, Data) {
 
         var uniqueId = 0;
 
         return {
             restrict: 'E',
             replace: true,
-            template: $templateCache.get('views/partials/argument.html'),
+            template: $templateCache.get('views/partials/property-output.html'),
             scope: {
                 name: '@',
-                arg: '=ngModel',
+                prop: '=ngModel',
                 active: '=',
-                form: '=',
-                valuesFrom: '='
+                requiredInputs: '=',
+                form: '='
             },
             link: function(scope) {
 
@@ -22,30 +22,14 @@ angular.module('clicheApp')
 
                 uniqueId++;
                 scope.view.uniqueId = uniqueId;
-
-                if (!_.isUndefined(scope.arg.valueFrom)) {
-                    scope.arg.value = scope.valuesFrom[scope.arg.valueFrom];
-                }
+                scope.view.isEnum = _.isArray(scope.prop.enum);
 
                 /**
-                 * Toggle argument box visibility
+                 * Toggle property box visibility
                  */
-                scope.toggleArgument = function() {
+                scope.toggleProperty = function() {
                     scope.active = !scope.active;
                 };
-
-                /**
-                 * Update the value if value from is changed
-                 */
-                scope.changeValueFrom = function() {
-                    scope.arg.value = scope.valuesFrom[scope.arg.valueFrom];
-                };
-
-                scope.$watch('arg.value', function(n, o) {
-                    if (n !== o && !_.isEmpty(n)) {
-                        scope.arg.valueFrom = null;
-                    }
-                });
 
                 /**
                  * Remove particular property
@@ -63,7 +47,7 @@ angular.module('clicheApp')
                     });
 
                     modalInstance.result.then(function () {
-                        Data.deleteProperty('arg', scope.name);
+                        Data.deleteProperty('output', scope.name);
                     });
                 };
 

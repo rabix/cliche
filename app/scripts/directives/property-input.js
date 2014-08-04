@@ -1,22 +1,21 @@
 'use strict';
 
 angular.module('clicheApp')
-    .directive('property', ['$templateCache', function ($templateCache) {
+    .directive('propertyInput', ['$templateCache', '$modal', 'Data', function ($templateCache, $modal, Data) {
 
         var uniqueId = 0;
 
         return {
             restrict: 'E',
             replace: true,
-            template: $templateCache.get('views/partials/property.html'),
+            template: $templateCache.get('views/partials/property-input.html'),
             scope: {
                 name: '@',
-                type: '@',
                 prop: '=ngModel',
                 active: '=',
-                form: '=',
                 requiredInputs: '=',
-                transforms: '='
+                transforms: '=',
+                form: '='
             },
             link: function(scope) {
 
@@ -43,6 +42,26 @@ angular.module('clicheApp')
                     } else {
                         scope.prop.enum = null;
                     }
+                };
+
+                /**
+                 * Remove particular property
+                 * @param e
+                 */
+                scope.removeItem = function(e) {
+
+                    e.stopPropagation();
+
+                    var modalInstance = $modal.open({
+                        template: $templateCache.get('views/partials/confirm-delete.html'),
+                        controller: 'ModalCtrl',
+                        windowClass: 'modal-confirm',
+                        resolve: {data: function () { return {}; }}
+                    });
+
+                    modalInstance.result.then(function () {
+                        Data.deleteProperty('input', scope.name);
+                    });
                 };
 
             }

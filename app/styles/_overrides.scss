@@ -18,7 +18,8 @@
       }
     }
   }
-  &.nav-tabs-steps {
+  &.nav-tabs-steps,
+  &.nav-tabs-trace {
     margin-bottom: 20px;
     li {
       a {
@@ -35,6 +36,9 @@
         }
       }
     }
+  }
+  &.nav-tabs-trace {
+    margin-top: 16px;
   }
 }
 
@@ -164,6 +168,13 @@ legend {
   &.legend-small {
     font-size: 16px;
     margin-bottom: 5px;
+
+    .btn {
+      padding: 1px 7px;
+      line-height: 20px;
+      margin: 3px;
+      font-size: 12px;
+    }
   }
   &.legend-r {
     text-align: right;
@@ -182,5 +193,19 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.modal {
+  &.modal-prop {
+    .modal-dialog {
+      width: 800px !important;
+      .main-actions {
+        text-align: right;
+        margin: 10px -15px -15px;
+        border-top: 1px solid #ddd;
+        padding: 10px;
+      }
+    }
+  }
 }
 

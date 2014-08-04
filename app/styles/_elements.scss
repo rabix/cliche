@@ -11,7 +11,7 @@
 
   /* Page heading */
   .heading {
-    margin: 0 0 20px 0;
+    margin: 0 0 3px 0;
     .go-back {
       margin: 10px 0;
     }
@@ -24,7 +24,7 @@
       li {
         display: inline-block;
         vertical-align: middle;
-        width: 48%;
+        width: 50%;
         font-size: 16px;
         text-transform: uppercase;
         padding: 10px 0;
@@ -312,6 +312,8 @@ legend {
   &.toggle {
     position: relative;
     cursor: pointer;
+    border: none;
+    padding-left: 25px;
     @include user-select(none);
 
     &:after {
@@ -319,7 +321,7 @@ legend {
       display: block;
       position: absolute;
       top: 50%;
-      right: 10px;
+      left: 10px;
       border-left: 5px solid #555;
       border-top: 5px solid transparent;
       border-bottom: 5px solid transparent;
@@ -339,30 +341,54 @@ legend {
 
 .property-wrap,
 .argument-wrap {
-  padding: 0 0 10px 0;
+  margin: 0 0 10px 0;
   &:hover {
     background-color: #fcfcfc;
   }
   &.active {
-    & > .row {
+    .property-body {
       display: block;
     }
   }
   & > .legend-tiny {
-    padding: 5px 10px;
+    padding: 5px 30px 5px 25px;
+    border: 1px solid #ddd;
+    margin: 0;
+    position: relative;
 
     .checkbox {
       display: inline-block;
-      margin: 0 20px 0 0;
+      margin: 0 10px 0 0;
       float: right;
     }
+
+    .remove {
+      position: absolute;
+      right: 0;
+      top: 0;
+      line-height: 15px;
+      font-size: 25px;
+      padding: 8px;
+      color: #666;
+      &:hover {
+        color: #333;
+      }
+    }
   }
-  & > .row {
-    margin-left: 0;
-    margin-right: 0;
+  .property-body {
     display: none;
-    & > div {
-      padding: 0 5px;
+    padding: 10px;
+    border: {
+      left: 1px solid #ddd;
+      right: 1px solid #ddd;
+      bottom: 1px solid #ddd;
+    }
+    & > .row {
+      margin-left: 0;
+      margin-right: 0;
+      & > div {
+        padding: 0 5px;
+      }
     }
   }
 
@@ -393,7 +419,6 @@ legend {
 
 .main-actions {
   overflow: auto;
-  border-top: 1px solid #ddd;
   padding: 10px 0;
   margin: 10px 0 0 0;
 }
@@ -415,5 +440,14 @@ legend {
 }
 
 .json-trace {
-  height: 600px;
+  height: 760px;
+  margin: 0 0 20px 0;
+}
+
+.console-trace {
+  font-size: 20px;
+}
+
+.tabs {
+  min-height: 650px;
 }

@@ -3,7 +3,8 @@
 
     <input ng-show="!prop.enum" type="text" class="form-control" name="input-string" ng-model="input" ng-required="prop.required">
 
-    <select ng-show="prop.enum" class="form-control" name="input-string" ng-model="input" ng-options="option for option in prop.enum" ng-required="prop.required">
-        <option value="">-- choose the option --</option>
+    <select ng-show="prop.enum" class="form-control" name="input-string" ng-model="input" ng-required="prop.required">
+        <option value>-- choose --</option>
+        <option ng-repeat="option in prop.enum track by $index" value="option">{{ (option === '') ? 'empty value' : option }}</option>
     </select>
 </div>
