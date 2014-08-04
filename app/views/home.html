@@ -19,7 +19,12 @@
                             <li ng-class="{active: view.tab === 'values'}"><a href ng-click="switchTab('values')">Values</a></li>
 
                             <li class="pull-right">
-                                <a href ng-click="toggleTrace()" class="toggle-trace" tooltip="{{ view.showTrace ? 'hide' : 'show' }} trace" tooltip-append-to-body="true">
+                                <a href
+                                   ng-click="toggleTrace()"
+                                   class="toggle-trace"
+                                   tooltip="{{ view.showTrace ? 'hide' : 'show' }} trace"
+                                   tooltip-append-to-body="true"
+                                   tooltip-placement="left">
                                     <i class="glyphicon" ng-class="{'glyphicon-pause': view.showTrace, 'glyphicon-play': !view.showTrace}"></i>
                                 </a>
                             </li>

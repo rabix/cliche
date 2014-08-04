@@ -7,7 +7,8 @@
             <li ng-repeat="item in list track by $index">
 
                 <div class="form-group" ng-class="{'has-error': isRequired && item.value === ''}">
-                    <input type="{{ (type === 'file') ? 'string' : type }}" class="form-control" ng-model="item.value" placeholder="Enter Value" ng-required="isRequired">
+                    <input ng-if="(type === 'file')" type="string" class="form-control" ng-model="item.value.path" placeholder="Enter Value" ng-required="isRequired">
+                    <input ng-if="!(type === 'file')" type="{{ type }}" class="form-control" ng-model="item.value" placeholder="Enter Value" ng-required="isRequired">
                 </div>
 
                 <a href ng-hide="min && list.length <= min" class="glyphicon glyphicon-remove remove-btn" ng-click="removeItem($index)"></a>

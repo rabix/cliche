@@ -1,4 +1,4 @@
-<div class="form-group" ng-class="{required: prop.required, 'has-error': ((input.length < prop.minItems && prop.minItems > 0) || (input.length > prop.maxItems && prop.maxItems > 0))}">
+<div class="form-group" ng-class="{required: prop.required, 'has-error': ((view.input.length < prop.minItems && prop.minItems > 0) || (view.input.length > prop.maxItems && prop.maxItems > 0))}">
     <label class="control-label">
         {{ key }}
         <span ng-if="prop.minItems || prop.maxItems">
@@ -6,5 +6,5 @@
             <strong ng-if="prop.maxItems">max: {{ prop.maxItems }}</strong>)
         </span>
     </label>
-    <enum ng-model="input" type="prop.items.type" min="prop.minItems" max="prop.maxItems" is-required="prop.required"></enum>
+    <enum ng-model="view.input" type="prop.items.type" min="prop.minItems" max="prop.maxItems" is-required="prop.required"></enum>
 </div>

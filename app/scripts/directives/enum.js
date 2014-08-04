@@ -19,11 +19,14 @@ angular.module('clicheApp')
 
                 if (!_.isArray(scope.model) && !isNaN(scope.min)) {
                     _.times(scope.min, function() {
-                        scope.list.push({value: ''});
+                        var itemScheme = scope.type === 'file' ? {value: {path: ''}} : {value: ''};
+                        scope.list.push(itemScheme);
                     });
                 } else {
                     _.each(scope.model, function(item) {
-                        scope.list.push({value: item});
+                        var value = item.path ? item.path : item;
+                        var itemScheme = scope.type === 'file' ? {value: {path: value}} : {value: value};
+                        scope.list.push(itemScheme);
                     });
                 }
 
@@ -34,7 +37,8 @@ angular.module('clicheApp')
                     if (scope.max && scope.list.length >= scope.max) {
                         return false;
                     } else {
-                        scope.list.push({value: ''});
+                        var itemScheme = scope.type === 'file' ? {value: {path: ''}} : {value: ''};
+                        scope.list.push(itemScheme);
                     }
                 };
 
@@ -56,6 +60,7 @@ angular.module('clicheApp')
                         scope.model = _.pluck(n, 'value');
                     }
                 }, true);
+
 
             }
         };
