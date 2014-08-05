@@ -71,7 +71,7 @@
 
             <div class="col-md-4">
                 <div class="form-group" ng-if="view.property.type === 'string'">
-                    <label>&nbsp;</label>
+                    <label class="empty-label">&nbsp;</label>
                     <div class="checkbox">
                         <label><input type="checkbox" ng-model="view.isEnum" ng-change="toggleEnum()"> Enum</label>
                     </div>
@@ -81,7 +81,7 @@
 
             <div class="col-md-4" ng-if="view.property.type === 'file'">
                 <div class="form-group">
-                    <label>&nbsp;</label>
+                    <label class="empty-label">&nbsp;</label>
                     <div class="checkbox">
                         <label><input type="checkbox" ng-model="view.property.adapter.streamable"> Streamable</label>
                     </div>
@@ -153,7 +153,7 @@
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <label>&nbsp;</label>
+                    <label class="empty-label">&nbsp;</label>
                     <div class="checkbox">
                         <label><input type="checkbox" ng-model="view.property.adapter.streamable"> Item Streamable</label>
                     </div>

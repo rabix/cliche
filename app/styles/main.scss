@@ -2,6 +2,10 @@
 @import "bootstrap";
 @import "mixins";
 
+html, body {
+  overflow-x: hidden;
+}
+
 body {
   color: #555;
   background-color: $gray;

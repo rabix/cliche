@@ -178,7 +178,7 @@ angular.module('clicheApp')
                     if (tmp[0]) { output = tmp[0]; }
                     break;
                 case 'transforms/m-suffix':
-                    output = 'M' + value;
+                    output = value + 'M';
                     break;
                 default:
                     output = value;

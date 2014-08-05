@@ -239,9 +239,15 @@ legend {
   border-color: $orange;
   color: $orange;
   margin: 0;
+  border-top: none;
+  margin-top: -1px;
   @include scrollBar($orange);
   @include box-shadow(none);
   @include border-radius(0);
+
+  @media (max-width: 600px) {
+    height: auto;
+  }
 }
 
 .console-trace {
@@ -254,6 +260,11 @@ legend {
   }
   @media (min-width: 992px) {
     min-height: 750px;
+  }
+  @media (max-width: 600px) {
+    &.left {
+      padding: 10px;
+    }
   }
 }
 
