@@ -34,7 +34,6 @@ angular.module('clicheApp')
 
                 scope.$watch('view.input', function(n, o) {
                     if (n !== o) {
-                        console.log(n);
                         scope.model = n;
                     }
                 }, true);

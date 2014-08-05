@@ -21,7 +21,7 @@ angular.module('clicheApp')
                     mem: 5000,
                     ports: [],
                     diskSpace: 0,
-                    network: 'no'
+                    network: false
                 },
                 platformFeatures: [
                     'transforms/strip_ext',
@@ -213,7 +213,8 @@ angular.module('clicheApp')
                         var tmp = [];
 
                         _.each(self.job.inputs[key], function(val) {
-                            tmp.push(self.applyTransform(property.adapter.listTransform, val));
+                            var value = val.path ? val.path : val;
+                            tmp.push(self.applyTransform(property.adapter.listTransform, value));
                         });
 
                         value = tmp.join(joiner);

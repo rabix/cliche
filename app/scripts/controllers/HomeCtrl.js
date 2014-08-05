@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('clicheApp')
-    .controller('HomeCtrl', ['$scope', '$timeout', '$document', '$modal', '$templateCache', 'Data', function ($scope, $timeout, $document, $modal, $templateCache, Data) {
+    .controller('HomeCtrl', ['$scope', 'Data', function ($scope, Data) {
 
         $scope.view = {};
         $scope.forms = {};
@@ -115,14 +115,13 @@ angular.module('clicheApp')
             $scope.view.tabViewPath = 'views/tabs/' + tab + '.html';
         };
 
+        /* watchers list */
         var watchers = [];
 
         /**
          * Turn on deep watch when console tab is visible
          */
         var turnOnDeepWatch = function() {
-
-            console.log('turnOnDeepWatch');
 
             $scope.view.command = Data.generateCommand();
 
@@ -131,7 +130,6 @@ angular.module('clicheApp')
             _.each(watch, function(arg) {
                 var watcher = $scope.$watch(arg, function(n, o) {
                     if (n !== o) {
-                        console.log('watcher:'+ arg);
                         $scope.view.command = Data.generateCommand();
                     }
                 }, true);
@@ -144,8 +142,6 @@ angular.module('clicheApp')
          * Turn off deep watch when console tab is hidden
          */
         var turnOffDeepWatch = function() {
-
-            console.log('turnOffDeepWatch');
 
             _.each(watchers, function(watcher) {
                 if (_.isFunction(watcher)) {
@@ -184,30 +180,5 @@ angular.module('clicheApp')
             }
         };
 
-        /**
-         * Show the modal for adding property items
-         * @param type
-         * @param e
-         */
-        $scope.addItem = function(type, e) {
-
-            e.stopPropagation();
-
-            $modal.open({
-                template: $templateCache.get('views/partials/add-property-' + type + '.html'),
-                controller: 'AddPropertyCtrl',
-                windowClass: 'modal-prop',
-                resolve: {
-                    options: function () {
-                        return {
-                            type: type,
-                            platformFeatures: $scope.view.toolForm.requirements.platformFeatures,
-                            valuesFrom: $scope.view.valuesFrom
-                        };
-                    }
-                }
-            });
-
-        };
 
     }]);

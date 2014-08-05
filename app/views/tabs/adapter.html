@@ -10,7 +10,7 @@
 
 <legend class="legend-small toggle" ng-class="{active: view.propsExpanded.args}" ng-click="toggleProperties('args')">
     Arguments
-    <a href ng-click="addItem('arg', $event)" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></a>
+    <add-property type="arg" platform-features="view.toolForm.requirements.platformFeatures" values-from="view.valuesFrom"></add-property>
 </legend>
 <argument
         ng-repeat="(key, argument) in view.toolForm.adapter.args track by $index"

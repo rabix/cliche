@@ -1,8 +1,6 @@
 <legend class="legend-small toggle" ng-class="{active: view.propsExpanded.outputs}" ng-click="toggleProperties('outputs')">
     Properties
-    <a href ng-click="addItem('output', $event)" class="btn btn-default">
-        <i class="glyphicon glyphicon-plus"></i>
-    </a>
+    <add-property type="output" platform-features="view.toolForm.requirements.platformFeatures" values-from="view.valuesFrom"></add-property>
 </legend>
 
 <property-output

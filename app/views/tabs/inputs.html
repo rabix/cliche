@@ -1,8 +1,6 @@
 <legend class="legend-small toggle" ng-class="{active: view.propsExpanded.inputs}" ng-click="toggleProperties('inputs')">
     Properties
-    <a href ng-click="addItem('input', $event)" class="btn btn-default">
-        <i class="glyphicon glyphicon-plus"></i>
-    </a>
+    <add-property type="input" platform-features="view.toolForm.requirements.platformFeatures" values-from="view.valuesFrom"></add-property>
 </legend>
 
 <property-input
