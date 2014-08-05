@@ -26,7 +26,7 @@ angular.module('clicheApp')
             var deferred = $q.defer();
 
             $localForage.getItem('tool').then(function(tool) {
-                if (_.isNull(tool)) {
+                if (_.isNull(tool) || _.isEmpty(tool)) {
                     $http({method: 'GET', url: 'data/tool.json'})
                         .success(function(data) {
                             self.tool = data.tool;
@@ -55,7 +55,7 @@ angular.module('clicheApp')
             var deferred = $q.defer();
 
             $localForage.getItem('job').then(function(job) {
-                if (_.isNull(job)) {
+                if (_.isNull(job) || _.isEmpty(job)) {
                     $http({method: 'GET', url: 'data/job.json'})
                         .success(function(data) {
                             self.job = data.job;
