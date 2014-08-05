@@ -2,11 +2,9 @@
 
 angular
     .module('clicheApp', [
-        'ngAnimate',
         'ngCookies',
         'ngResource',
         'ngRoute',
-        'ngSanitize',
         'ui.bootstrap',
         'ngPrettyJson'
     ])
@@ -15,14 +13,6 @@ angular
             .when('/', {
                 templateUrl: 'views/home.html',
                 controller: 'HomeCtrl'
-            })
-            .when('/login', {
-                templateUrl: 'views/login.html',
-                controller: 'LoginCtrl'
-            })
-            .when('/restart', {
-                templateUrl: 'views/restart.html',
-                controller: 'RestartCtrl'
             })
             .otherwise({
                 redirectTo: '/'

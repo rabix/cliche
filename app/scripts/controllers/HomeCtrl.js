@@ -1,9 +1,7 @@
 'use strict';
 
 angular.module('clicheApp')
-    .controller('HomeCtrl', ['$scope', '$timeout', '$document', '$modal', '$templateCache', 'Header', 'Data', function ($scope, $timeout, $document, $modal, $templateCache, Header, Data) {
-
-        Header.setActive('home');
+    .controller('HomeCtrl', ['$scope', '$timeout', '$document', '$modal', '$templateCache', 'Data', function ($scope, $timeout, $document, $modal, $templateCache, Data) {
 
         $scope.view = {};
         $scope.forms = {};
@@ -49,7 +47,6 @@ angular.module('clicheApp')
 
         /* add additional prop attributes */
         _.each($scope.view.toolForm.inputs.properties, function(prop, key) {
-            prop.required = _.contains($scope.view.toolForm.inputs.required, key);
 
             if (_.isUndefined(prop.adapter.separator)) {
                 prop.adapter.separator = '_';

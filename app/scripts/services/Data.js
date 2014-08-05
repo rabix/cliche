@@ -30,10 +30,10 @@ angular.module('clicheApp')
             },
             inputs: {
                 type: 'object',
-                required: ['reference', 'reads'],
                 properties: {
                     reference: {
                         type: 'file',
+                        required: true,
                         adapter: {
                             order: 2,
                             transform: 'transforms/strip_ext'
@@ -43,6 +43,7 @@ angular.module('clicheApp')
                         type: 'array',
                         minItems: 1,
                         maxItems: 2,
+                        required: true,
                         items: {
                             type: 'file'
                         },
