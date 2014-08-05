@@ -1,119 +1,97 @@
 "use strict";
 
 angular.module('clicheApp')
-    .factory('Data', [function () {
+    .factory('Data', ['$localForage', '$http', '$q', function ($localForage, $http, $q) {
 
         var self = {};
 
-        self.tool = {
-            softwareDescription: '',
-            documentAuthor: 'author@gmail.com',
-            requirements: {
-                environment: {
-                    container: {
-                        type: 'docker',
-                        uri: 'uri',
-                        imageId: 'imageId'
-                    }
-                },
-                resources: {
-                    cpu: 0,
-                    mem: 5000,
-                    ports: [],
-                    diskSpace: 0,
-                    network: false
-                },
-                platformFeatures: [
-                    'transforms/strip_ext',
-                    'transforms/m-suffix'
-                ]
-            },
-            inputs: {
-                type: 'object',
-                properties: {
-                    reference: {
-                        type: 'file',
-                        required: true,
-                        adapter: {
-                            order: 2,
-                            transform: 'transforms/strip_ext'
-                        }
-                    },
-                    reads: {
-                        type: 'array',
-                        minItems: 1,
-                        maxItems: 2,
-                        required: true,
-                        items: {
-                            type: 'file'
-                        },
-                        adapter: {
-                            order: 3,
-                            streamable: true
-                        }
-                    },
-                    minimum_seed_length: {
-                        type: 'integer',
-                        adapter: {
-                            order: 1,
-                            prefix: '-m',
-                            separator: '_'
-                        }
-                    },
-                    min_std_max_min: {
-                        type: 'array',
-                        minItems: 1,
-                        maxItems: 4,
-                        items: {
-                            type: 'number'
-                        },
-                        adapter: {
-                            order: 1,
-                            prefix: '-I',
-                            listSeparator: ','
-                        }
-                    }
+        /**
+         * Tool json object
+         * @type {object}
+         */
+        self.tool = {};
+
+        /**
+         * Job json object
+         * @type {object}
+         */
+        self.job = null;
+
+        /**
+         * Fetch tool object from storage
+         * @returns {*}
+         */
+        self.fetchTool = function() {
+
+            var deferred = $q.defer();
+
+            $localForage.getItem('tool').then(function(tool) {
+                if (_.isNull(tool)) {
+                    $http({method: 'GET', url: 'data/tool.json'})
+                        .success(function(data) {
+                            self.tool = data.tool;
+                            deferred.resolve(data.tool);
+                            $localForage.setItem('tool', data.tool);
+                        })
+                        .error(function() {
+                            deferred.reject('JSON file could not be fetched')
+                        });
+                } else {
+                    self.tool = tool;
+                    deferred.resolve(tool);
                 }
-            },
-            outputs: {
-                type: 'object',
-                required: ['sam'],
-                properties: {
-                    sam: {
-                        type: 'file',
-                        adapter: {
-                            streamable: true,
-                            glob: 'output.sam'
-                        }
-                    }
-                }
-            },
-            adapter: {
-                baseCmd: ['bwa'],
-                stdout: 'output.sam',
-                args: [
-                    {
-                        order: 0,
-                        value: 'mem'
-                    },
-                    {
-                        order: 1,
-                        prefix: '-t',
-                        valueFrom: '#allocatedResources/cpu'
-                    }
-                ]
-            }
+            });
+
+            return deferred.promise;
+
         };
 
-        self.job = {
-            inputs: {},
-            allocatedResources: {
-                cpu: 4,
-                mem: 3000,
-                ports: [],
-                diskSpace: 20000,
-                network: 'No'
-            }
+        /**
+         * Fetch job object from storage
+         * @returns {*}
+         */
+        self.fetchJob = function() {
+
+            var deferred = $q.defer();
+
+            $localForage.getItem('job').then(function(job) {
+                if (_.isNull(job)) {
+                    $http({method: 'GET', url: 'data/job.json'})
+                        .success(function(data) {
+                            self.job = data.job;
+                            deferred.resolve(data.job);
+                            $localForage.setItem('job', data.job);
+                        })
+                        .error(function() {
+                            deferred.reject('JSON file could not be fetched')
+                        });
+                } else {
+                    self.job = job;
+                    deferred.resolve(job);
+                }
+            });
+
+            return deferred.promise;
+
+        };
+
+        /**
+         * Save tool and job json
+         *
+         * @returns {*}
+         */
+        self.save = function() {
+
+            var deferred = $q.defer();
+
+            $q.all([
+                $localForage.setItem('tool', self.tool),
+                $localForage.setItem('job', self.job)
+            ]).then(function() {
+                deferred.resolve();
+            });
+
+            return deferred.promise;
         };
 
         /**
@@ -213,7 +191,7 @@ angular.module('clicheApp')
                         var tmp = [];
 
                         _.each(self.job.inputs[key], function(val) {
-                            var value = val.path ? val.path : val;
+                            var value = _.isObject(val) ? val.path : val;
                             tmp.push(self.applyTransform(property.adapter.listTransform, value));
                         });
 

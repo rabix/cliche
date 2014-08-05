@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('clicheApp')
-    .controller('HomeCtrl', ['$scope', 'Data', function ($scope, Data) {
+    .controller('HomeCtrl', ['$scope','$q', 'Data', function ($scope, $q, Data) {
+
+        $scope.$parent.view.classes.push('home', 'row');
 
         $scope.view = {};
         $scope.forms = {};
@@ -24,56 +26,68 @@ angular.module('clicheApp')
             args: {}
         };
 
+        $scope.view.valuesFrom = {};
+
         /* tool form obj */
         $scope.view.toolForm = Data.tool;
-
         /* job form obj */
         $scope.view.jobForm = Data.job;
 
-        /* generate valuesFrom array */
-        $scope.view.valuesFrom = {};
-        _.each($scope.view.jobForm.allocatedResources, function(value, key) {
+        $scope.view.loading = true;
 
-            $scope.view.valuesFrom['#allocatedResources/' + key] = value;
+        $q.all([
+                Data.fetchTool(),
+                Data.fetchJob()
+            ]).then(function() {
 
-            $scope.$watch('view.toolForm.requirements.resources.'+key, function(newVal, oldVal) {
-                if (newVal !== oldVal) {
-                    $scope.view.jobForm.allocatedResources[key] = newVal;
-                    $scope.view.valuesFrom['#allocatedResources/' + key] = newVal;
-                }
+                $scope.view.toolForm = Data.tool;
+                $scope.view.jobForm = Data.job;
+
+                $scope.view.loading = false;
+
+                /* add additional prop attributes */
+                _.each($scope.view.toolForm.inputs.properties, function(prop, key) {
+
+                    if (_.isUndefined(prop.adapter.separator)) {
+                        prop.adapter.separator = '_';
+                    }
+                    if (_.isUndefined(prop.adapter.listSeparator)) {
+                        prop.adapter.listSeparator = 'repeat';
+                    }
+                });
+
+                /* add additional args attributes */
+                _.each($scope.view.toolForm.adapter.args, function(arg) {
+                    if (_.isUndefined(arg.separator)) {
+                        arg.separator = '_';
+                    }
+                    if (!_.isUndefined(arg.valueFrom)) {
+                        arg.value = $scope.view.valuesFrom[arg.valueFrom];
+                    }
+                });
+
+                /* prepare transforms */
+                $scope.view.transforms = {
+                    'transforms/strip_ext': false,
+                    'transforms/m-suffix': false
+                };
+                _.each($scope.view.toolForm.requirements.platformFeatures, function(transform) {
+                    $scope.view.transforms[transform] = true;
+                });
+
+                /* generate valuesFrom array */
+                _.each($scope.view.jobForm.allocatedResources, function(value, key) {
+
+                    $scope.view.valuesFrom['#allocatedResources/' + key] = value;
+
+                    $scope.$watch('view.toolForm.requirements.resources.'+key, function(newVal, oldVal) {
+                        if (newVal !== oldVal) {
+                            $scope.view.jobForm.allocatedResources[key] = newVal;
+                            $scope.view.valuesFrom['#allocatedResources/' + key] = newVal;
+                        }
+                    });
+                });
             });
-
-        });
-
-        /* add additional prop attributes */
-        _.each($scope.view.toolForm.inputs.properties, function(prop, key) {
-
-            if (_.isUndefined(prop.adapter.separator)) {
-                prop.adapter.separator = '_';
-            }
-            if (_.isUndefined(prop.adapter.listSeparator)) {
-                prop.adapter.listSeparator = 'repeat';
-            }
-        });
-
-        /* add additional args attributes */
-        _.each($scope.view.toolForm.adapter.args, function(arg) {
-            if (_.isUndefined(arg.separator)) {
-                arg.separator = '_';
-            }
-            if (!_.isUndefined(arg.valueFrom)) {
-                arg.value = $scope.view.valuesFrom[arg.valueFrom];
-            }
-        });
-
-        /* prepare transforms */
-        $scope.view.transforms = {
-            'transforms/strip_ext': false,
-            'transforms/m-suffix': false
-        };
-        _.each($scope.view.toolForm.requirements.platformFeatures, function(transform) {
-            $scope.view.transforms[transform] = true;
-        });
 
         /**
          * Toggle transforms list
