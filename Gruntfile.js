@@ -144,7 +144,8 @@ module.exports = function (grunt) {
                             '<%= yeoman.dist %>/{,*/}*',
                             '!<%= yeoman.dist %>/.git*',
                             '!<%= yeoman.dist %>/.git/*',
-                            '!<%= yeoman.dist %>/fonts'
+                            '!<%= yeoman.dist %>/fonts',
+                            '!<%= yeoman.dist %>/build.sh'
                         ]
                     }
                 ]
@@ -286,7 +287,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%= yeoman.app %>/images',
-                        src: '{,*/}*.{png,jpg,jpeg,gif}',
+                        src: '{,*/}*.{png,jpg,jpeg,gif,ico}',
                         dest: '<%= yeoman.dist %>/images'
                     }
                 ]

@@ -1,12 +1,11 @@
 .page {
-  margin-bottom: 50px;
 
   /* Page heading */
   .heading {
     background-color: $gray;
     background-image: url(../images/bg.png);
     border-top: 1px solid #ddd;
-    margin: 0 0 3px 0;
+    margin-bottom: 3px;
     @include box-shadow(0px 2px 0px 0px $orange);
 
     .logo {
@@ -240,6 +239,7 @@ legend {
   border-color: $orange;
   color: $orange;
   margin: 0;
+  @include scrollBar($orange);
   @include box-shadow(none);
   @include border-radius(0);
 }
