@@ -14,6 +14,7 @@ angular.module('clicheApp')
                 arg: '=ngModel',
                 active: '=',
                 form: '=',
+                properties: '=',
                 valuesFrom: '='
             },
             link: function(scope) {
@@ -63,7 +64,7 @@ angular.module('clicheApp')
                     });
 
                     modalInstance.result.then(function () {
-                        Data.deleteProperty('arg', scope.name);
+                        Data.deleteProperty('arg', scope.name, scope.properties);
                     });
                 };
 

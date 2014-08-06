@@ -25,15 +25,19 @@ angular.module('clicheApp')
 
         $scope.addProperty = function() {
 
+            $scope.view.error = '';
             $scope.view.form.$setDirty();
 
             if ($scope.view.form.$invalid) {
                 return false;
             }
 
-            Data.addProperty(options.type, $scope.view.name, $scope.view.property);
-
-            $modalInstance.close();
+            Data.addProperty(options.type, $scope.view.name, $scope.view.property, options.properties)
+                .then(function() {
+                    $modalInstance.close();
+                }, function(error) {
+                    $scope.view.error = error;
+                });
 
         };
 

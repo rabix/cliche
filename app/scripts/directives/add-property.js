@@ -9,6 +9,7 @@ angular.module('clicheApp')
             template: '<a href ng-click="addItem($event)" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i></a>',
             scope: {
                 type: '@',
+                properties: '=',
                 platformFeatures: '=',
                 valuesFrom: '='
             },
@@ -31,6 +32,7 @@ angular.module('clicheApp')
                             options: function () {
                                 return {
                                     type: scope.type,
+                                    properties: scope.properties,
                                     platformFeatures: scope.platformFeatures,
                                     valuesFrom: scope.valuesFrom
                                 };

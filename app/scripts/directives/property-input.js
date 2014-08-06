@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('clicheApp')
-    .directive('propertyInput', ['$templateCache', '$modal', 'Data', function ($templateCache, $modal, Data) {
+    .directive('propertyInput', ['$templateCache', '$modal', 'Data', 'RecursionHelper', function ($templateCache, $modal, Data, RecursionHelper) {
 
         var uniqueId = 0;
 
@@ -13,57 +13,83 @@ angular.module('clicheApp')
                 name: '@',
                 prop: '=ngModel',
                 active: '=',
-                requiredInputs: '=',
                 transforms: '=',
+                properties: '=',
+                platformFeatures: '=',
+                valuesFrom: '=',
                 form: '='
             },
-            link: function(scope) {
+            compile: function(element) {
+                return RecursionHelper.compile(element, function(scope) {
 
-                scope.view = {};
+                    scope.view = {};
 
-                uniqueId++;
-                scope.view.uniqueId = uniqueId;
-                scope.view.isEnum = _.isArray(scope.prop.enum);
+                    uniqueId++;
+                    scope.view.uniqueId = uniqueId;
+                    scope.view.isEnum = _.isArray(scope.prop.enum);
 
-                /**
-                 * Toggle property box visibility
-                 */
-                scope.toggleProperty = function() {
-                    scope.active = !scope.active;
-                };
+                    scope.view.propsExpanded = [];
+                    scope.view.active = {};
+
+                    /**
+                     * Toggle properties visibility (expand/collapse)
+                     */
+                    scope.toggleProperties = function() {
+
+                        scope.view.propsExpanded = !scope.view.propsExpanded;
+
+                        _.each(scope.prop.properties, function(value, key) {
+                            scope.view.active[key] = scope.view.propsExpanded;
+                        });
+                    };
+
+                    /**
+                     * Toggle property box visibility
+                     */
+                    scope.toggleProperty = function() {
+                        scope.active = !scope.active;
+                    };
 
 
-                /**
-                 * Toggle enum flag
-                 */
-                scope.toggleEnum = function() {
-                    if (scope.view.isEnum) {
-                        scope.prop.enum = [''];
-                    } else {
-                        scope.prop.enum = null;
-                    }
-                };
+                    /**
+                     * Toggle enum flag
+                     */
+                    scope.toggleEnum = function() {
+                        if (scope.view.isEnum) {
+                            scope.prop.enum = [''];
+                        } else {
+                            scope.prop.enum = null;
+                        }
+                    };
 
-                /**
-                 * Remove particular property
-                 * @param e
-                 */
-                scope.removeItem = function(e) {
+                    /**
+                     * Remove particular property
+                     * @param e
+                     */
+                    scope.removeItem = function(e) {
 
-                    e.stopPropagation();
+                        e.stopPropagation();
 
-                    var modalInstance = $modal.open({
-                        template: $templateCache.get('views/partials/confirm-delete.html'),
-                        controller: 'ModalCtrl',
-                        windowClass: 'modal-confirm',
-                        resolve: {data: function () { return {}; }}
+                        var modalInstance = $modal.open({
+                            template: $templateCache.get('views/partials/confirm-delete.html'),
+                            controller: 'ModalCtrl',
+                            windowClass: 'modal-confirm',
+                            resolve: {data: function () { return {}; }}
+                        });
+
+                        modalInstance.result.then(function () {
+                            Data.deleteProperty('input', scope.name, scope.properties);
+                        });
+                    };
+
+                    scope.$watch('prop.type', function(n, o) {
+                        if (n !== o && n === 'object') {
+                            if (_.isEmpty(scope.prop.properties)) {
+                                scope.prop.properties = {};
+                            }
+                        }
                     });
-
-                    modalInstance.result.then(function () {
-                        Data.deleteProperty('input', scope.name);
-                    });
-                };
-
+                });
             }
         };
     }]);

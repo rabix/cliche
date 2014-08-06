@@ -1,6 +1,11 @@
 <legend class="legend-small toggle" ng-class="{active: view.propsExpanded.inputs}" ng-click="toggleProperties('inputs')">
     Properties
-    <add-property type="input" platform-features="view.toolForm.requirements.platformFeatures" values-from="view.valuesFrom"></add-property>
+    <add-property
+            type="input"
+            properties="view.toolForm.inputs.properties"
+            platform-features="view.toolForm.requirements.platformFeatures"
+            values-from="view.valuesFrom">
+    </add-property>
 </legend>
 
 <property-input
@@ -9,6 +14,10 @@
         active="view.active.inputs[key]"
         name="{{ key }}"
         form="forms.toolForm"
-        required-inputs="view.toolForm.inputs.required"
+        properties="view.toolForm.inputs.properties"
+        platform-features="view.toolForm.requirements.platformFeatures"
+        values-from="view.valuesFrom"
         transforms="view.toolForm.requirements.platformFeatures">
 </property-input>
+
+<p class="alert alert-info" ng-if="view.toolForm.inputs.properties | isEmpty">There are no properties at this moment.</p>

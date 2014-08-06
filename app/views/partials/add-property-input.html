@@ -6,6 +6,8 @@
 
     <form ng-submit="addProperty()" name="view.form" novalidate>
 
+        <p ng-if="view.error" class="alert alert-danger">{{ view.error }}</p>
+
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group" ng-class="{'has-error': (view.form.name.$invalid && view.form.$dirty)}">

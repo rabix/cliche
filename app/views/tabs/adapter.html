@@ -10,7 +10,12 @@
 
 <legend class="legend-small toggle" ng-class="{active: view.propsExpanded.args}" ng-click="toggleProperties('args')">
     Arguments
-    <add-property type="arg" platform-features="view.toolForm.requirements.platformFeatures" values-from="view.valuesFrom"></add-property>
+    <add-property
+            type="arg"
+            properties="view.toolForm.adapter.args"
+            platform-features="view.toolForm.requirements.platformFeatures"
+            values-from="view.valuesFrom">
+    </add-property>
 </legend>
 <argument
         ng-repeat="(key, argument) in view.toolForm.adapter.args track by $index"
@@ -18,5 +23,6 @@
         active="view.active.args[key]"
         name="{{ key }}"
         form="forms.toolForm"
+        properties="view.toolForm.adapter.args"
         values-from="view.valuesFrom">
 </argument>

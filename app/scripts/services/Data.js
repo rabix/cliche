@@ -100,20 +100,33 @@ angular.module('clicheApp')
          * @param type
          * @param name
          * @param prop
+         * @param property
          */
-        self.addProperty = function(type, name, prop) {
+        self.addProperty = function(type, name, prop, properties) {
 
-            switch (type) {
-                case 'input':
-                    self.tool.inputs.properties[name] = prop;
-                    break;
-                case 'output':
-                    self.tool.outputs.properties[name] = prop;
-                    break;
-                case 'arg':
-                    self.tool.adapter.args.push(prop);
-                    break;
+            var deferred = $q.defer();
+
+            if (type === 'arg') {
+
+                properties.push(prop);
+
+                deferred.resolve();
+
+            } else {
+                if (!_.isUndefined(properties[name])) {
+
+                    deferred.reject('Choose another key, the one already exists');
+
+                } else {
+
+                    properties[name] = prop;
+
+                    deferred.resolve();
+
+                }
             }
+
+            return deferred.promise;
 
         };
 
@@ -122,19 +135,14 @@ angular.module('clicheApp')
          *
          * @param type
          * @param index
+         * @param properties
          */
-        self.deleteProperty = function(type, index) {
+        self.deleteProperty = function(type, index, properties) {
 
-            switch (type) {
-                case 'input':
-                    delete self.tool.inputs.properties[index];
-                    break;
-                case 'output':
-                    delete self.tool.outputs.properties[index];
-                    break;
-                case 'arg':
-                    self.tool.adapter.args.splice(index, 1);
-                    break;
+            if (type === 'arg') {
+                properties.splice(index, 1);
+            } else {
+                delete properties[index];
             }
 
         };

@@ -10,7 +10,7 @@
         <div class="row">
 
             <div class="col-md-3">
-                <div class="form-group" ng-class="{'has-error': (form[name+'-type'].$invalid && form[name].$dirty)}">
+                <div class="form-group" ng-class="{'has-error': (form[name+'-type'].$invalid && form[name].$dirty)}" tooltip="Type" tooltip-popup-delay="1000">
                     <label for="property-input-type-{{ view.uniqueId }}" class="control-label">Type</label>
                     <select class="form-control" id="property-input-type-{{ view.uniqueId }}" name="{{ name }}-type" ng-model="prop.type">
                         <option value="file">file</option>
@@ -18,13 +18,14 @@
                         <option value="integer">integer</option>
                         <option value="array">array</option>
                         <option value="boolean">boolean</option>
+                        <option value="object">object</option>
                     </select>
                 </div>
             </div>
             <!-- END Type -->
 
             <div class="col-md-1">
-                <div class="form-group">
+                <div class="form-group" tooltip="Prefix" tooltip-popup-delay="1000">
                     <label for="property-prefix-{{ view.uniqueId }}" class="control-label">Prefix</label>
                     <input type="text" class="form-control" id="property-prefix-{{ view.uniqueId }}" name="{{ name }}-prefix" ng-model="prop.adapter.prefix">
                 </div>
@@ -32,7 +33,7 @@
             <!-- END Prefix -->
 
             <div class="col-md-2">
-                <div class="form-group">
+                <div class="form-group" tooltip="Separator" tooltip-popup-delay="1000">
                     <label for="property-separator-{{ view.uniqueId }}" class="control-label">Separator</label>
                     <select class="form-control" id="property-separator-{{ view.uniqueId }}" name="{{ name }}-separator" ng-model="prop.adapter.separator">
                         <option value="">empty string</option>
@@ -44,7 +45,7 @@
             <!-- END Separator -->
 
             <div class="col-md-2">
-                <div class="form-group">
+                <div class="form-group" tooltip="Transform" tooltip-popup-delay="1000">
                     <label for="property-transform-{{ view.uniqueId }}" class="control-label">Transform</label>
                     <select class="form-control" id="property-transform-{{ view.uniqueId }}" name="{{ name }}-transform" ng-model="prop.adapter.transform" ng-options="transform for transform in transforms">
                         <option value="">-- none --</option>
@@ -54,7 +55,7 @@
             <!-- END Transform -->
 
             <div class="col-md-2">
-                <div class="form-group">
+                <div class="form-group" tooltip="Order" tooltip-popup-delay="1000">
                     <label for="property-order-{{ view.uniqueId }}" class="control-label">Order</label>
                     <input type="number" class="form-control" id="property-order-{{ view.uniqueId }}" name="{{ name }}-order" ng-model="prop.adapter.order">
                 </div>
@@ -86,7 +87,7 @@
         <div class="row" ng-if="prop.type === 'array'">
 
             <div class="col-md-2">
-                <div class="form-group">
+                <div class="form-group" tooltip="Min" tooltip-popup-delay="1000">
                     <label for="property-item-min-{{ view.uniqueId }}" class="control-label">Min</label>
                     <input type="number" class="form-control" id="property-item-min-{{ view.uniqueId }}" name="{{ name }}-item-min" ng-model="prop.minItems" min="0">
                 </div>
@@ -94,7 +95,7 @@
             <!-- END Min -->
 
             <div class="col-md-2">
-                <div class="form-group">
+                <div class="form-group" tooltip="Max" tooltip-popup-delay="1000">
                     <label for="property-item-max-{{ view.uniqueId }}" class="control-label">Max</label>
                     <input type="number" class="form-control" id="property-item-max-{{ view.uniqueId }}" name="{{ name }}-item-max" ng-model="prop.maxItems" min="0">
                 </div>
@@ -102,7 +103,7 @@
             <!-- END Max -->
 
             <div class="col-md-2">
-                <div class="form-group">
+                <div class="form-group" tooltip="Item Type" tooltip-popup-delay="1000">
                     <label for="property-item-type-{{ view.uniqueId }}" class="control-label">Item Type</label>
 
                     <select class="form-control" id="property-item-type-{{ view.uniqueId }}" name="{{ name }}-item-type" ng-model="prop.items.type">
@@ -116,7 +117,7 @@
             <!-- END Item Type -->
 
             <div class="col-md-2">
-                <div class="form-group">
+                <div class="form-group" tooltip="Item Separator" tooltip-popup-delay="1000">
                     <label for="property-item-separator-{{ view.uniqueId }}" class="control-label">Item Separator</label>
 
                     <select class="form-control" id="property-item-separator-{{ view.uniqueId }}" name="{{ name }}-item-separator" ng-model="prop.adapter.listSeparator">
@@ -131,7 +132,7 @@
             <!-- END Item Separator -->
 
             <div class="col-md-2" ng-if="prop.items.type === 'file'">
-                <div class="form-group">
+                <div class="form-group" tooltip="Transform" tooltip-popup-delay="1000">
                     <label for="property-item-transform-{{ view.uniqueId }}" class="control-label">Transform</label>
                     <select class="form-control" id="property-item-transform-{{ view.uniqueId }}" name="{{ name }}-item-transform" ng-model="prop.adapter.listTransform" ng-options="transform for transform in transforms">
                         <option value="">-- none --</option>
@@ -157,6 +158,31 @@
                 <enum ng-model="prop.enum" type="string" min="1" is-required="true"></enum>
             </div>
         </div>
+
+        <div class="row" ng-if="prop.type === 'object'">
+            <div class="col-md-12">
+                <legend class="legend-small toggle" ng-class="{active: view.propsExpanded}" ng-click="toggleProperties()">
+                    Properties
+                    <add-property
+                            type="input"
+                            properties="prop.properties"
+                            platform-features="platformFeatures"
+                            values-from="valuesFrom">
+                    </add-property>
+                </legend>
+                <property-input
+                        ng-repeat="(key, property) in prop.properties"
+                        ng-model="property"
+                        active="view.active[key]"
+                        name="{{ key }}"
+                        form="form"
+                        properties="prop.properties"
+                        transforms="transforms">
+                </property-input>
+                <p class="alert alert-info" ng-if="prop.properties | isEmpty">There are no properties at this moment.</p>
+            </div>
+        </div>
+
     </div>
 
 </div>

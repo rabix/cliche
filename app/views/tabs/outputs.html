@@ -1,6 +1,11 @@
 <legend class="legend-small toggle" ng-class="{active: view.propsExpanded.outputs}" ng-click="toggleProperties('outputs')">
     Properties
-    <add-property type="output" platform-features="view.toolForm.requirements.platformFeatures" values-from="view.valuesFrom"></add-property>
+    <add-property
+            type="output"
+            properties="view.toolForm.outputs.properties"
+            platform-features="view.toolForm.requirements.platformFeatures"
+            values-from="view.valuesFrom">
+    </add-property>
 </legend>
 
 <property-output
@@ -9,5 +14,6 @@
         active="view.active.outputs[key]"
         name="{{ key }}"
         form="forms.toolForm"
+        properties="view.toolForm.outputs.properties"
         required-inputs="view.toolForm.outputs.required">
 </property-output>

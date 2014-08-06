@@ -160,7 +160,7 @@ legend {
     & > .legend-tiny {
       border-bottom: 1px solid #ddd;
     }
-    .property-body {
+    & > .property-body {
       display: block;
     }
   }
@@ -188,7 +188,7 @@ legend {
       }
     }
   }
-  .property-body {
+  & > .property-body {
     display: none;
     padding: 10px;
     background-color: #f9f9f9;
@@ -198,6 +198,13 @@ legend {
       & > div {
         padding: 0 5px;
       }
+    }
+    .control-label {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
+      display: block;
+      overflow: hidden;
     }
   }
 
@@ -210,7 +217,7 @@ legend {
 
 .input-property {
   & > .form-group {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 
     &.required {
       .control-label {
@@ -223,6 +230,19 @@ legend {
         }
       }
     }
+  }
+}
+
+.form-group-wrap {
+  border: 1px solid #eee;
+  padding-bottom: 5px;
+  & > .control-label {
+    background-color: #eee;
+    display: block;
+    padding: 5px;
+  }
+  .form-group-inner {
+    padding: 0px 5px;
   }
 }
 
