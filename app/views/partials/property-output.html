@@ -1,7 +1,22 @@
 <div class="property-wrap" ng-class="{active: active}">
 
     <legend class="legend-tiny toggle" ng-class="{active: active}" ng-click="toggleProperty()">
-        {{ name }}
+
+        <div class="property-name" ng-hide="view.edit">
+            <span>{{ name }}</span>
+            <a href ng-click="toggleEdit($event)"><i class="glyphicon glyphicon-edit"></i></a>
+        </div>
+
+        <div class="property-name-form" ng-show="view.edit">
+            <div class="input-group" ng-class="{'has-error': view.error}">
+                <input type="text" class="form-control" name="name" ng-model="view.name" ng-click="stopPropagation($event)" ng-keypress="changeName($event)" placeholder="property name" >
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" ng-click="changeName($event)"><i class="glyphicon glyphicon-floppy-disk"></i></button>
+                    <button class="btn btn-default" ng-click="toggleEdit($event)"><i class="glyphicon glyphicon-remove"></i></button>
+                </span>
+            </div>
+        </div>
+
         <div class="checkbox"><label><input type="checkbox" ng-model="prop.required"> required</label></div>
         <span class="remove" ng-click="removeItem($event)">&times;</span>
     </legend>

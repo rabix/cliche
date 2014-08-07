@@ -35,59 +35,65 @@ angular.module('clicheApp')
 
         $scope.view.loading = true;
 
-        $q.all([
-                Data.fetchTool(),
-                Data.fetchJob()
-            ]).then(function() {
+        $scope.$watch('$parent.view.fetch', function(doFetch) {
+            if (doFetch) {
 
-                $scope.view.toolForm = Data.tool;
-                $scope.view.jobForm = Data.job;
+                $q.all([
+                        Data.fetchTool(),
+                        Data.fetchJob()
+                    ]).then(function() {
 
-                $scope.view.loading = false;
+                        $scope.view.toolForm = Data.tool;
+                        $scope.view.jobForm = Data.job;
 
-                /* add additional prop attributes */
-                _.each($scope.view.toolForm.inputs.properties, function(prop, key) {
+                        $scope.view.loading = false;
 
-                    if (_.isUndefined(prop.adapter.separator)) {
-                        prop.adapter.separator = '_';
-                    }
-                    if (_.isUndefined(prop.adapter.listSeparator)) {
-                        prop.adapter.listSeparator = 'repeat';
-                    }
-                });
+                        /* add additional prop attributes */
+                        _.each($scope.view.toolForm.inputs.properties, function(prop, key) {
 
-                /* add additional args attributes */
-                _.each($scope.view.toolForm.adapter.args, function(arg) {
-                    if (_.isUndefined(arg.separator)) {
-                        arg.separator = '_';
-                    }
-                    if (!_.isUndefined(arg.valueFrom)) {
-                        arg.value = $scope.view.valuesFrom[arg.valueFrom];
-                    }
-                });
+                            if (_.isUndefined(prop.adapter.separator)) {
+                                prop.adapter.separator = '_';
+                            }
+                            if (_.isUndefined(prop.adapter.listSeparator)) {
+                                prop.adapter.listSeparator = 'repeat';
+                            }
+                        });
 
-                /* prepare transforms */
-                $scope.view.transforms = {
-                    'transforms/strip_ext': false,
-                    'transforms/m-suffix': false
-                };
-                _.each($scope.view.toolForm.requirements.platformFeatures, function(transform) {
-                    $scope.view.transforms[transform] = true;
-                });
+                        /* add additional args attributes */
+                        _.each($scope.view.toolForm.adapter.args, function(arg) {
+                            if (_.isUndefined(arg.separator)) {
+                                arg.separator = '_';
+                            }
+                            if (!_.isUndefined(arg.valueFrom)) {
+                                arg.value = $scope.view.valuesFrom[arg.valueFrom];
+                            }
+                        });
 
-                /* generate valuesFrom array */
-                _.each($scope.view.jobForm.allocatedResources, function(value, key) {
+                        /* prepare transforms */
+                        $scope.view.transforms = {
+                            'transforms/strip_ext': false,
+                            'transforms/m-suffix': false
+                        };
+                        _.each($scope.view.toolForm.requirements.platformFeatures, function(transform) {
+                            $scope.view.transforms[transform] = true;
+                        });
 
-                    $scope.view.valuesFrom['#allocatedResources/' + key] = value;
+                        /* generate valuesFrom array */
+                        _.each($scope.view.jobForm.allocatedResources, function(value, key) {
 
-                    $scope.$watch('view.toolForm.requirements.resources.'+key, function(newVal, oldVal) {
-                        if (newVal !== oldVal) {
-                            $scope.view.jobForm.allocatedResources[key] = newVal;
-                            $scope.view.valuesFrom['#allocatedResources/' + key] = newVal;
-                        }
+                            $scope.view.valuesFrom['#allocatedResources/' + key] = value;
+
+                            $scope.$watch('view.toolForm.requirements.resources.'+key, function(newVal, oldVal) {
+                                if (newVal !== oldVal) {
+                                    $scope.view.jobForm.allocatedResources[key] = newVal;
+                                    $scope.view.valuesFrom['#allocatedResources/' + key] = newVal;
+                                }
+                            });
+                        });
                     });
-                });
-            });
+
+            }
+        });
 
         /**
          * Toggle transforms list

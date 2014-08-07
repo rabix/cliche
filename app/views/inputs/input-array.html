@@ -6,5 +6,7 @@
             <strong ng-if="prop.maxItems">max: {{ prop.maxItems }}</strong>)
         </span>
     </label>
-    <enum ng-model="view.input" type="prop.items.type" min="prop.minItems" max="prop.maxItems" is-required="prop.required"></enum>
+    <div class="input-property-body">
+        <enum ng-model="view.input" type="prop.items.type" min="prop.minItems" max="prop.maxItems" properties="prop.items.properties" is-required="prop.required"></enum>
+    </div>
 </div>

@@ -24,6 +24,17 @@ angular.module('clicheApp')
                 uniqueId++;
                 scope.view.uniqueId = uniqueId;
                 scope.view.isEnum = _.isArray(scope.prop.enum);
+                scope.view.edit = false;
+
+                /**
+                 * Toggle edit name form
+                 *
+                 * @param e
+                 */
+                scope.toggleEdit = function(e) {
+                    e.stopPropagation();
+                    scope.view.edit = !scope.view.edit;
+                };
 
                 /**
                  * Toggle property box visibility
@@ -50,6 +61,46 @@ angular.module('clicheApp')
                     modalInstance.result.then(function () {
                         Data.deleteProperty('output', scope.name, scope.properties);
                     });
+                };
+
+                /**
+                 * Change the name of the property
+                 * @param e
+                 * @returns {boolean}
+                 */
+                scope.changeName = function(e) {
+
+                    e.stopPropagation();
+
+                    scope.view.error = false;
+
+                    if (!_.isUndefined(e.keyCode)) {
+                        if (e.keyCode !== 13 && e.keyCode !== 0) {
+                            return false;
+                        }
+                    }
+
+                    if (!_.isUndefined(scope.properties[scope.view.name]) || _.isEmpty(scope.view.name)) {
+                        scope.view.error = true;
+                        return false;
+                    } else {
+                        scope.properties[scope.view.name] = _.cloneDeep(scope.properties[scope.name], function() {
+                            delete scope.properties[scope.name];
+                        });
+                    }
+
+                    scope.name = scope.view.name;
+
+                    scope.view.edit = false;
+
+                };
+
+                /**
+                 * Stop event propagation
+                 * @param e
+                 */
+                scope.stopPropagation = function(e) {
+                    e.stopPropagation();
                 };
 
             }

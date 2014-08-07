@@ -85,19 +85,27 @@
   li {
     position: relative;
     margin-bottom: 10px;
-    .form-group {
+    & > .form-group {
       margin: 0 40px 0 0;
+      &.form-group-object {
+        border-bottom: 1px solid #ddd;
+      }
     }
     & > .remove-btn {
       top: 4px;
     }
     &:last-child {
       margin-bottom: 0;
+      & > .form-group {
+        &.form-group-object {
+          border-bottom: 0;
+        }
+      }
     }
   }
   &.wide {
     li {
-      .form-group {
+      & > .form-group {
         margin-right: 0px;
       }
     }
@@ -154,7 +162,21 @@ legend {
   border: 1px solid #ddd;
 
   &:hover {
-    border: 1px solid #ccc;
+    @include transition(border 0.3s ease);
+    border: 1px solid #bbb;
+
+    & > .legend-tiny {
+      background-color: #ddd;
+    }
+    & > .property-body {
+      background-color: #f3f3f3;
+    }
+
+    &.active {
+      & > .legend-tiny {
+        border-bottom: 1px solid #bbb;
+      }
+    }
   }
   &.active {
     & > .legend-tiny {
@@ -168,21 +190,23 @@ legend {
     padding: 5px 30px 5px 25px;
     margin: 0;
     position: relative;
+    overflow: auto;
 
     .checkbox {
       display: inline-block;
-      margin: 0 10px 0 0;
+      margin: 7px 10px 0 0;
       float: right;
     }
 
     .remove {
       position: absolute;
       right: 0;
-      top: 0;
+      top: 50%;
       line-height: 15px;
       font-size: 25px;
       padding: 8px;
       color: #666;
+      margin-top: -15px;
       &:hover {
         color: #333;
       }
@@ -213,11 +237,63 @@ legend {
       margin: 5px 0;
     }
   }
+
+  .property-name {
+    margin: 7px 0;
+    float: left;
+    a {
+      padding: 10px 5px;
+      color: #555;
+    }
+  }
+  .property-name-form {
+    font-weight: normal;
+    width: 300px;
+    float: left;
+    .alert {
+      padding: 5px;
+    }
+  }
+}
+
+.argument-wrap {
+  & > .legend-tiny {
+    overflow: hidden;
+  }
 }
 
 .input-property {
+
   & > .form-group {
-    margin-bottom: 10px;
+    margin: 0 0 10px 0;
+    border: 1px solid #ddd;
+
+    &:hover {
+      @include transition(border 0.3s ease);
+      border: 1px solid #bbb;
+
+      & > .control-label {
+        border-bottom: 1px solid #bbb;
+        background-color: #ddd;
+      }
+      & > .input-property-body {
+        background-color: #f3f3f3;
+      }
+    }
+
+    & > .control-label {
+      padding: 5px 10px;
+      margin: 0;
+      position: relative;
+      border-bottom: 1px solid #ddd;
+      display: block;
+      background-color: #eee;
+    }
+
+    & > .input-property-body {
+      padding: 10px;
+      background-color: #f9f9f9;
+    }
 
     &.required {
       .control-label {
@@ -233,18 +309,18 @@ legend {
   }
 }
 
-.form-group-wrap {
-  border: 1px solid #eee;
-  padding-bottom: 5px;
-  & > .control-label {
-    background-color: #eee;
-    display: block;
-    padding: 5px;
-  }
-  .form-group-inner {
-    padding: 0px 5px;
-  }
-}
+//.form-group-wrap {
+//  border: 1px solid #eee;
+//  padding-bottom: 5px;
+//  & > .control-label {
+//    background-color: #eee;
+//    display: block;
+//    padding: 5px;
+//  }
+//  .form-group-inner {
+//    padding: 0px 5px;
+//  }
+//}
 
 .main-actions {
   overflow: auto;
@@ -279,7 +355,7 @@ legend {
     padding: 10px 20px;
   }
   @media (min-width: 992px) {
-    min-height: 750px;
+    min-height: 770px;
   }
   @media (max-width: 600px) {
     &.left {
@@ -334,6 +410,61 @@ legend {
   @include transition(opacity 0.3s ease);
   &.show {
     opacity: 1;
+  }
+}
+
+.fixed-left,
+.fixed-right {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.fixed-left {
+  left: 0;
+  width: 60%;
+  & + .row {
+    margin-top: 46px;
+  }
+}
+
+.fixed-right {
+  right: 0;
+  width: 42%;
+  & + .tabs {
+    position: fixed;
+    top: 46px;
+    right: 0;
+    width: 42%;
+    z-index: 999;
+  }
+}
+
+.cancel-fixed {
+  .fixed-left,
+  .fixed-right,
+  .fixed-right + .tabs{
+    position: static;
+    width: auto;
+  }
+  .fixed-left {
+    & + .row {
+      margin-top: 0px;
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .fixed-left,
+  .fixed-right,
+  .fixed-right + .tabs{
+    position: static;
+    width: auto;
+  }
+  .fixed-left {
+    & + .row {
+      margin-top: 0px;
+    }
   }
 }
 

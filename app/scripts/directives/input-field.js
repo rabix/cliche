@@ -22,9 +22,6 @@ angular.module('clicheApp')
                     uniqueId++;
                     scope.view.uniqueId = uniqueId;
 
-                    //var value = scope.model && scope.model.path ? scope.model.path : scope.model;
-                    //var inputScheme = scope.prop.type === 'file' ? {path: value} : value;
-
                     var inputScheme;
 
                     if (scope.prop.type === 'file') {
@@ -45,7 +42,6 @@ angular.module('clicheApp')
 
                     scope.$watch('view.input', function(n, o) {
                         if (n !== o) {
-                            console.log(n);
                             scope.model = n;
                         }
                     }, true);

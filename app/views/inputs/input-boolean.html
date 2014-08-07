@@ -1,5 +1,7 @@
 <div class="form-group" ng-class="{required: prop.required, 'has-error': inputForm['input-' + prop.type].$invalid && form.$dirty}">
-    <div class="checkbox">
-        <label><input type="checkbox" name="input-boolean" ng-model="view.input"> {{ key }}</label>
+    <div class="input-property-body">
+        <div class="checkbox">
+            <label><input type="checkbox" name="input-boolean" ng-model="view.input"> {{ key }}</label>
+        </div>
     </div>
 </div>

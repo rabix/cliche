@@ -6,6 +6,7 @@ angular.module('clicheApp')
         $scope.view = {};
         $scope.view.classes = ['page'];
         $scope.view.saving = false;
+        $scope.view.fetch = false;
 
         $scope.$on('classChange', function(event, classes) {
             $scope.view.classes = classes;
@@ -26,6 +27,10 @@ angular.module('clicheApp')
                 $interval.cancel(saveIntervalId);
                 saveIntervalId = undefined;
             }
+        });
+
+        Data.checkStructure().then(function() {
+            $scope.view.fetch = true;
         });
 
     }]);

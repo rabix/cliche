@@ -1,8 +1,19 @@
 "use strict";
 
+/*
+ * An Angular service which helps with creating recursive directives.
+ * @author Mark Lagendijk
+ * @license MIT
+ */
 angular.module('clicheApp')
     .factory('RecursionHelper', ['$compile', function($compile){
         return {
+            /**
+             * Manually compiles the element, fixing the recursion loop.
+             * @param element
+             * @param [link] A post-link function, or an object with function(s) registered via pre and post properties.
+             * @returns {object} An object containing the linking functions.
+             */
             compile: function(element, link){
                 // Normalize the link parameter
                 if(angular.isFunction(link)){
