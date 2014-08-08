@@ -318,7 +318,7 @@ legend {
     }
 
     &.required {
-      .control-label {
+      & > .control-label {
         position: relative;
         &:after {
           content: '*';

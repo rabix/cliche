@@ -41,7 +41,7 @@ angular.module('clicheApp')
 
                 };
 
-                if (!_.isArray(scope.model) && !isNaN(scope.min)) {
+                if ((!_.isArray(scope.model) || scope.model.length === 0) && !isNaN(scope.min)) {
                     _.times(scope.min, function() {
                         scope.view.list.push({value: scope.getSchema()});
                     });

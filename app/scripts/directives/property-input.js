@@ -96,7 +96,7 @@ angular.module('clicheApp')
                         modalInstance.result.then(function () {
                             Data.deleteProperty('input', scope.name, scope.properties);
 
-                            if (_.isObject(scope.inputs) && !_.isUndefined(scope.inputs)) {
+                            if (!_.isUndefined(scope.inputs[scope.name])) {
                                 delete scope.inputs[scope.name];
                             }
 
@@ -132,16 +132,28 @@ angular.module('clicheApp')
                             scope.view.error = true;
                             return false;
                         } else {
-                            scope.properties[scope.view.name] = _.cloneDeep(scope.properties[scope.name], function() {
-                                scope.inputs[scope.view.name] = _.cloneDeep(scope.inputs[scope.name], function() {
 
-                                    delete scope.inputs[scope.name];
-                                    delete scope.properties[scope.name];
+                            scope.properties[scope.view.name] = angular.copy(scope.properties[scope.name]);
 
-                                    scope.name = scope.view.name;
-                                    scope.view.edit = false;
+                            if (!_.isUndefined(scope.inputs[scope.name])) {
+                                scope.inputs[scope.view.name] = angular.copy(scope.inputs[scope.name]);
+                                delete scope.inputs[scope.name];
+                            }
+
+                            if (_.isArray(scope.inputs)) {
+                                _.each(scope.inputs, function(input) {
+                                    if (!_.isUndefined(input)) {
+                                        input[scope.view.name] = angular.copy(input[scope.name]);
+                                        delete input[scope.name];
+                                    }
                                 });
-                            });
+                            }
+
+                            delete scope.properties[scope.name];
+
+                            scope.name = scope.view.name;
+                            scope.view.edit = false;
+
                         }
 
                     };

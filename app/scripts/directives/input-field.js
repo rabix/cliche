@@ -21,16 +21,40 @@ angular.module('clicheApp')
 
                     uniqueId++;
                     scope.view.uniqueId = uniqueId;
-                    console.log(scope.prop);
 
-                    var inputScheme;
+                    var inputScheme = scope.model;
 
                     if (scope.prop.type === 'file') {
+
                         inputScheme = {path: (scope.model && scope.model.path ? scope.model.path : scope.model)};
+
                     } else if(scope.prop.type === 'object') {
+
                         inputScheme = _.isObject(scope.model) ? scope.model : {};
+
+                    } else if(scope.prop.type === 'array') {
+
+                        inputScheme = []
+                        switch(scope.prop.items.type) {
+                        case 'object':
+                            _.each(scope.model, function(value) {
+                                var innerScheme = _.isObject(value) ? value : {};
+                                delete innerScheme.path;
+                                inputScheme.push(innerScheme);
+                            });
+                            break;
+                        case 'file':
+                            _.each(scope.model, function(value) {
+                                var innerScheme = {path: (value && value.path ? value.path : value)};
+                                inputScheme.push(innerScheme);
+                            });
+                            break;
+                        default:
+                            inputScheme.push(_.isObject(scope.model) ? '' : scope.model);
+                            break;
+                        }
                     } else {
-                        inputScheme = scope.model;
+                        inputScheme = _.isObject(scope.model) ? '' : scope.model;
                     }
 
                     scope.view.input = inputScheme;
