@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /*
  * An Angular service which helps with creating recursive directives.

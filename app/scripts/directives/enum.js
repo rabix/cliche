@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('clicheApp')
-    .directive('enum', ['$templateCache', '$compile', function ($templateCache, $compile) {
+    .directive('enum', ['$templateCache', function ($templateCache) {
         return {
             restrict: 'E',
             replace: true,

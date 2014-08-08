@@ -50,7 +50,7 @@ angular.module('clicheApp')
                     /**
                      * Toggle properties visibility (expand/collapse)
                      */
-                    scope.toggleProperties = function(e) {
+                    scope.toggleProperties = function() {
 
                         scope.view.propsExpanded = !scope.view.propsExpanded;
 

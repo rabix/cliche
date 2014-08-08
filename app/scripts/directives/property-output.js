@@ -69,7 +69,6 @@ angular.module('clicheApp')
                 /**
                  * Change the name of the property
                  * @param e
-                 * @returns {boolean}
                  */
                 scope.changeName = function(e) {
 

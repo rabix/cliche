@@ -49,7 +49,7 @@ angular.module('clicheApp')
                         $scope.view.loading = false;
 
                         /* add additional prop attributes */
-                        _.each($scope.view.toolForm.inputs.properties, function(prop, key) {
+                        _.each($scope.view.toolForm.inputs.properties, function(prop) {
 
                             if (_.isUndefined(prop.adapter.separator)) {
                                 prop.adapter.separator = '_';
@@ -194,9 +194,13 @@ angular.module('clicheApp')
             $scope.view.showTrace = !$scope.view.showTrace;
 
             if ($scope.view.showTrace) {
-                if ($scope.view.trace === 'console') turnOnDeepWatch();
+                if ($scope.view.trace === 'console') {
+                    turnOnDeepWatch();
+                }
             } else {
-                if ($scope.view.trace === 'console') turnOffDeepWatch();
+                if ($scope.view.trace === 'console') {
+                    turnOffDeepWatch();
+                }
             }
         };
 

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 angular.module('clicheApp')
     .factory('Data', ['$localForage', '$http', '$q', function ($localForage, $http, $q) {
@@ -37,7 +37,7 @@ angular.module('clicheApp')
                             $localForage.setItem('tool', data.tool);
                         })
                         .error(function() {
-                            deferred.reject('JSON file could not be fetched')
+                            deferred.reject('JSON file could not be fetched');
                         });
                 } else {
                     self.tool = tool;
@@ -67,7 +67,7 @@ angular.module('clicheApp')
                             $localForage.setItem('job', data.job);
                         })
                         .error(function() {
-                            deferred.reject('JSON file could not be fetched')
+                            deferred.reject('JSON file could not be fetched');
                         });
                 } else {
                     self.job = job;
@@ -226,15 +226,15 @@ angular.module('clicheApp')
             var output;
 
             switch(transform) {
-                case 'transforms/strip_ext':
-                    var tmp = value ? value.split('.') : [];
-                    if (tmp[0]) { output = tmp[0]; }
-                    break;
-                case 'transforms/m-suffix':
-                    output = value + 'm';
-                    break;
-                default:
-                    output = value;
+            case 'transforms/strip_ext':
+                var tmp = value ? value.split('.') : [];
+                if (tmp[0]) { output = tmp[0]; }
+                break;
+            case 'transforms/m-suffix':
+                output = value + 'm';
+                break;
+            default:
+                output = value;
             }
 
             return output;
@@ -456,7 +456,7 @@ angular.module('clicheApp')
                     $q.all([
                             $localForage.setItem('version', 2),
                             $localForage.setItem('tool', {}),
-                            $localForage.setItem('job', {}),
+                            $localForage.setItem('job', {})
                         ]).then(function() {
                             deferred.resolve();
                         });

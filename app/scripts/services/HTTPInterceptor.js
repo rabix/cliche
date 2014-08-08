@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 angular.module('clicheApp')
     .factory('HTTPInterceptor', ['$q', '$rootScope', '$location', function ($q, $rootScope, $location) {
