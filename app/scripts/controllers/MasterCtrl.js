@@ -16,9 +16,15 @@ angular.module('clicheApp')
 
             $scope.view.saving = true;
 
-            Data.save().then(function() {
-                $scope.view.saving = false;
-            });
+            console.log('saving...');
+            Data.save()
+                .then(function() {
+                    $scope.view.saving = false;
+                    console.log('saved.');
+                }, function() {
+                    $scope.view.saving = false;
+                    console.log('save failed fo some reason...');
+                });
 
         }, 5000);
 

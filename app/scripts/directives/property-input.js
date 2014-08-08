@@ -96,7 +96,7 @@ angular.module('clicheApp')
                         modalInstance.result.then(function () {
                             Data.deleteProperty('input', scope.name, scope.properties);
 
-                            if (!_.isUndefined(scope.inputs[scope.name])) {
+                            if (scope.inputs &&  !_.isUndefined(scope.inputs[scope.name])) {
                                 delete scope.inputs[scope.name];
                             }
 
@@ -135,7 +135,7 @@ angular.module('clicheApp')
 
                             scope.properties[scope.view.name] = angular.copy(scope.properties[scope.name]);
 
-                            if (!_.isUndefined(scope.inputs[scope.name])) {
+                            if (scope.inputs && !_.isUndefined(scope.inputs[scope.name])) {
                                 scope.inputs[scope.view.name] = angular.copy(scope.inputs[scope.name]);
                                 delete scope.inputs[scope.name];
                             }

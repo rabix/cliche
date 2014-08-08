@@ -151,9 +151,12 @@ angular.module('clicheApp')
             $q.all([
                 $localForage.setItem('tool', self.tool),
                 $localForage.setItem('job', self.job)
-            ]).then(function() {
-                deferred.resolve();
-            });
+            ]).then(
+                function() {
+                    deferred.resolve();
+                }, function() {
+                    deferred.reject();
+                });
 
             return deferred.promise;
         };

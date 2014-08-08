@@ -35,6 +35,7 @@ angular.module('clicheApp')
                     } else if(scope.prop.type === 'array') {
 
                         inputScheme = []
+
                         switch(scope.prop.items.type) {
                         case 'object':
                             _.each(scope.model, function(value) {
