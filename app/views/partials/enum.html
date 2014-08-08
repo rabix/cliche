@@ -6,9 +6,7 @@
         <ul class="enum-list" ng-class="{wide: min && view.list.length <= min}">
             <li ng-repeat="item in view.list track by $index">
 
-                <div class="form-group form-group-{{ type }}" ng-class="{'has-error': isRequired && item.value === ''}">
-                    <ng-include src="view.tplPath"></ng-include>
-                </div>
+                <ng-include src="view.tplPath"></ng-include>
 
                 <a href ng-hide="min && view.list.length <= min" class="glyphicon glyphicon-remove remove-btn" ng-click="removeItem($index)"></a>
             </li>

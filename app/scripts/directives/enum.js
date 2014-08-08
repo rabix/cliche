@@ -12,7 +12,8 @@ angular.module('clicheApp')
                 min: '=',
                 max: '=',
                 properties: '=',
-                isRequired: '='
+                isRequired: '=',
+                form: '='
             },
             link: function(scope) {
 

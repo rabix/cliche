@@ -21,6 +21,7 @@ angular.module('clicheApp')
 
                     uniqueId++;
                     scope.view.uniqueId = uniqueId;
+                    console.log(scope.prop);
 
                     var inputScheme;
 

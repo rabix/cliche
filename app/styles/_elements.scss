@@ -9,6 +9,7 @@
     @include box-shadow(0px 2px 0px 0px $orange);
 
     .logo {
+      position: relative;
       a {
         font-size: 25px;
         color: #555;
@@ -26,6 +27,17 @@
           height: 27px;
           display: inline-block;
         }
+      }
+      &:after {
+        content: 'alpha';
+        display: inline-block;
+        font-size: 9px;
+        color: #999;
+        position: absolute;
+        top: 3px;
+        right: 13px;
+        text-shadow: none;
+        letter-spacing: 1px;
       }
     }
   }
@@ -85,7 +97,7 @@
   li {
     position: relative;
     margin-bottom: 10px;
-    & > .form-group {
+    .enum-field.form-group {
       margin: 0 40px 0 0;
       &.form-group-object {
         border-bottom: 1px solid #ddd;
@@ -96,7 +108,7 @@
     }
     &:last-child {
       margin-bottom: 0;
-      & > .form-group {
+      .enum-field.form-group {
         &.form-group-object {
           border-bottom: 0;
         }
@@ -105,7 +117,7 @@
   }
   &.wide {
     li {
-      & > .form-group {
+      .enum-field.form-group {
         margin-right: 0px;
       }
     }
@@ -194,7 +206,7 @@ legend {
 
     .checkbox {
       display: inline-block;
-      margin: 7px 10px 0 0;
+      margin: 5px 10px 0 0;
       float: right;
     }
 
@@ -239,7 +251,7 @@ legend {
   }
 
   .property-name {
-    margin: 7px 0;
+    margin: 5px 0;
     float: left;
     a {
       padding: 10px 5px;
@@ -248,8 +260,18 @@ legend {
   }
   .property-name-form {
     font-weight: normal;
-    width: 300px;
+    width: 240px;
     float: left;
+    .input-group {
+      margin-left: -5px;
+      input {
+        height: 30px;
+        padding: 5px;
+      }
+      button {
+        padding: 4px 8px;
+      }
+    }
     .alert {
       padding: 5px;
     }
@@ -308,19 +330,6 @@ legend {
     }
   }
 }
-
-//.form-group-wrap {
-//  border: 1px solid #eee;
-//  padding-bottom: 5px;
-//  & > .control-label {
-//    background-color: #eee;
-//    display: block;
-//    padding: 5px;
-//  }
-//  .form-group-inner {
-//    padding: 0px 5px;
-//  }
-//}
 
 .main-actions {
   overflow: auto;

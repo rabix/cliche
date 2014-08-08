@@ -164,10 +164,10 @@ label {
 
 .btn {
   @include border-radius(0);
-  &.btn-primary {
-    background-color: #075211;
-    border-color: darken(#075211, 10%);
-  }
+  //&.btn-primary {
+  //  background-color: #075211;
+  //  border-color: darken(#075211, 10%);
+  //}
 }
 
 .input-group {

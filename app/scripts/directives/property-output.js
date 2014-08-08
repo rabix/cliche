@@ -34,6 +34,9 @@ angular.module('clicheApp')
                 scope.toggleEdit = function(e) {
                     e.stopPropagation();
                     scope.view.edit = !scope.view.edit;
+                    if (scope.view.edit) {
+                        scope.view.name = angular.copy(scope.name);
+                    }
                 };
 
                 /**

@@ -11,7 +11,7 @@
             <div class="input-group" ng-class="{'has-error': view.error}">
                 <input type="text" class="form-control" name="name" ng-model="view.name" ng-click="stopPropagation($event)" ng-keypress="changeName($event)" placeholder="property name" >
                 <span class="input-group-btn">
-                    <button class="btn btn-primary" ng-click="changeName($event)"><i class="glyphicon glyphicon-floppy-disk"></i></button>
+                    <button class="btn btn-primary" ng-click="changeName($event)"><i class="glyphicon glyphicon-ok"></i></button>
                     <button class="btn btn-default" ng-click="toggleEdit($event)"><i class="glyphicon glyphicon-remove"></i></button>
                 </span>
             </div>
@@ -25,7 +25,7 @@
         <div class="row">
 
             <div class="col-md-3">
-                <div class="form-group" ng-class="{'has-error': (form[name+'-type'].$invalid && form[name].$dirty)}" tooltip="Type" tooltip-popup-delay="1000">
+                <div class="form-group" ng-class="{'has-error': (form[name+'-type'].$invalid && form[name].$dirty)}" title="Type">
                     <label for="property-input-type-{{ view.uniqueId }}" class="control-label">Type</label>
                     <select class="form-control" id="property-input-type-{{ view.uniqueId }}" name="{{ name }}-type" ng-model="prop.type">
                         <option value="file">file</option>
@@ -39,7 +39,7 @@
             <!-- END Type -->
 
             <div class="col-md-1">
-                <div class="form-group" tooltip="Prefix" tooltip-popup-delay="1000">
+                <div class="form-group" title="Prefix">
                     <label for="property-prefix-{{ view.uniqueId }}" class="control-label">Prefix</label>
                     <input type="text" class="form-control" id="property-prefix-{{ view.uniqueId }}" name="{{ name }}-prefix" ng-model="prop.adapter.prefix" ng-disabled="view.disabled">
                 </div>
@@ -47,7 +47,7 @@
             <!-- END Prefix -->
 
             <div class="col-md-2">
-                <div class="form-group" tooltip="Separator" tooltip-popup-delay="1000">
+                <div class="form-group" title="Separator">
                     <label for="property-separator-{{ view.uniqueId }}" class="control-label">Separator</label>
                     <select class="form-control" id="property-separator-{{ view.uniqueId }}" name="{{ name }}-separator" ng-model="prop.adapter.separator" ng-disabled="view.disabled">
                         <option value="">empty string</option>
@@ -59,7 +59,7 @@
             <!-- END Separator -->
 
             <div class="col-md-2">
-                <div class="form-group" tooltip="Transform" tooltip-popup-delay="1000">
+                <div class="form-group" title="Transform">
                     <label for="property-transform-{{ view.uniqueId }}" class="control-label">Transform</label>
                     <select class="form-control" id="property-transform-{{ view.uniqueId }}" name="{{ name }}-transform" ng-model="prop.adapter.transform" ng-options="transform for transform in transforms" ng-disabled="view.disabled">
                         <option value="">-- none --</option>
@@ -69,7 +69,7 @@
             <!-- END Transform -->
 
             <div class="col-md-2">
-                <div class="form-group" tooltip="Order" tooltip-popup-delay="1000">
+                <div class="form-group" title="Order">
                     <label for="property-order-{{ view.uniqueId }}" class="control-label">Order</label>
                     <input type="number" class="form-control" id="property-order-{{ view.uniqueId }}" name="{{ name }}-order" ng-model="prop.adapter.order">
                 </div>
@@ -101,7 +101,7 @@
         <div class="row" ng-if="prop.type === 'array'">
 
             <div class="col-md-2">
-                <div class="form-group" tooltip="Min" tooltip-popup-delay="1000">
+                <div class="form-group" title="Min">
                     <label for="property-item-min-{{ view.uniqueId }}" class="control-label">Min</label>
                     <input type="number" class="form-control" id="property-item-min-{{ view.uniqueId }}" name="{{ name }}-item-min" ng-model="prop.minItems" min="0">
                 </div>
@@ -109,7 +109,7 @@
             <!-- END Min -->
 
             <div class="col-md-2">
-                <div class="form-group" tooltip="Max" tooltip-popup-delay="1000">
+                <div class="form-group" title="Max">
                     <label for="property-item-max-{{ view.uniqueId }}" class="control-label">Max</label>
                     <input type="number" class="form-control" id="property-item-max-{{ view.uniqueId }}" name="{{ name }}-item-max" ng-model="prop.maxItems" min="0">
                 </div>
@@ -117,7 +117,7 @@
             <!-- END Max -->
 
             <div class="col-md-2">
-                <div class="form-group" tooltip="Item Type" tooltip-popup-delay="1000">
+                <div class="form-group" title="Item Type">
                     <label for="property-item-type-{{ view.uniqueId }}" class="control-label">Item Type</label>
 
                     <select class="form-control" id="property-item-type-{{ view.uniqueId }}" name="{{ name }}-item-type" ng-model="prop.items.type">
@@ -132,7 +132,7 @@
             <!-- END Item Type -->
 
             <div class="col-md-2">
-                <div class="form-group" tooltip="Item Separator" tooltip-popup-delay="1000">
+                <div class="form-group" title="Item Separator">
                     <label for="property-item-separator-{{ view.uniqueId }}" class="control-label">Item Separator</label>
 
                     <select class="form-control" id="property-item-separator-{{ view.uniqueId }}" name="{{ name }}-item-separator" ng-model="prop.adapter.listSeparator" ng-disabled="view.disabled">
@@ -147,7 +147,7 @@
             <!-- END Item Separator -->
 
             <div class="col-md-2" ng-if="prop.items.type === 'file'">
-                <div class="form-group" tooltip="Transform" tooltip-popup-delay="1000">
+                <div class="form-group" title="Transform">
                     <label for="property-item-transform-{{ view.uniqueId }}" class="control-label">Transform</label>
                     <select class="form-control" id="property-item-transform-{{ view.uniqueId }}" name="{{ name }}-item-transform" ng-model="prop.adapter.listTransform" ng-options="transform for transform in transforms">
                         <option value="">-- none --</option>

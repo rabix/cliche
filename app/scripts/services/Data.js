@@ -455,7 +455,6 @@ angular.module('clicheApp')
                             $localForage.setItem('tool', {}),
                             $localForage.setItem('job', {}),
                         ]).then(function() {
-                            console.log('erased');
                             deferred.resolve();
                         });
 
