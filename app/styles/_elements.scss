@@ -346,6 +346,7 @@ legend {
   margin: 0;
   border-top: none;
   margin-top: -1px;
+  padding-bottom: 40px;
   @include scrollBar($orange);
   @include box-shadow(none);
   @include border-radius(0);
@@ -362,6 +363,31 @@ legend {
 .tabs {
   &.left {
     padding: 10px 20px;
+  }
+  &.right {
+    .tab {
+      position: relative;
+      .zclip {
+        .btn {
+          position: absolute;
+          bottom: 5px;
+          left: 5px;
+        }
+        p {
+          position: absolute;
+          padding: 20px 30px;
+          top: 50%;
+          left: 50%;
+          width: 200px;
+          margin-left: -100px;
+          margin-top: -50px;
+          color: $orange;
+          border: 1px solid $orange;
+          text-align: center;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
   }
   @media (min-width: 992px) {
     min-height: 770px;

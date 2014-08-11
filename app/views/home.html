@@ -68,14 +68,17 @@
 
         <div class="tabs right" ng-switch="view.trace">
             <div class="tab" ng-switch-when="tool">
+                <zclip data="tool"></zclip>
                 <pre class="json-trace" pretty-json="view.toolForm"></pre>
             </div>
 
             <div class="tab" ng-switch-when="job">
+                <zclip data="job"></zclip>
                 <pre class="json-trace" pretty-json="view.jobForm"></pre>
             </div>
 
             <div class="tab" ng-switch-when="console">
+                <zclip data="command"></zclip>
                 <pre class="console-trace">{{ view.command }}</pre>
             </div>
         </div>

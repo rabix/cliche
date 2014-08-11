@@ -20,6 +20,12 @@ angular.module('clicheApp')
         self.job = null;
 
         /**
+         * Command generated from input and adapter values
+         * @type {string}
+         */
+        self.command = '';
+
+        /**
          * Fetch tool object from storage
          *
          * @returns {*}
@@ -433,6 +439,7 @@ angular.module('clicheApp')
                 command.join(' ') +
                 ' > ' + self.tool.adapter.stdout;
 
+            self.command = output;
 
             return output;
         };

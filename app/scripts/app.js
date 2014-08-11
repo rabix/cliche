@@ -26,4 +26,6 @@ angular
             storeName: 'clicheDB'
         });
 
+        ZeroClipboard.config({swfPath: 'bower_components/zeroclipboard/dist/ZeroClipboard.swf'});
+
     }]);
